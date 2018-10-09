@@ -10,17 +10,21 @@
   width: 100%;
 }
 #top-nav {
-  height: 100px;
+  height: 101px;
   width: 100%;
+  background-image: url(../src/img/beachfinder-nav.jpg);
+  background-repeat: no-repeat;
+  background-color: white;
 }
 h1 {
   text-align: center;
   margin-top: 0px;
   margin-bottom: 0px;
   color: white;
-  padding-top: 35px;
+  padding-top: 30px;
   margin-right: auto;
   margin-left: auto;
   font-family: 'Montserrat', sans-serif;
   font-size: 2em;
+  text-shadow: 2px 2px #525252;
 }
