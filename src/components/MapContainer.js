@@ -3,7 +3,7 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios'
 class MapContainer extends Component {
     state = {
-
+      venues:[]
     }
     componentDidMount() {
       this.getVenues()
@@ -11,15 +11,18 @@ class MapContainer extends Component {
     getVenues = () => {
       const endpoint = "https://api.foursquare.com/v2/venues/explore?"
       const parameters = {
-        cliend_id:"L105UNFOLBWBYAH2I4KRUPGRZZVZXIY3NFZAFZ0V4OSRWXHN",
+        client_id:"L105UNFOLBWBYAH2I4KRUPGRZZVZXIY3NFZAFZ0V4OSRWXHN",
         client_secret:"531CGS50AMTVAHMAJXV1BGE35KC4445ZCG30O4QWBB5BR3LR",
-        query:"food",
-        near:"Seattle",
-        v:"20181009"
+        query:"beach",
+        near:"Seattle, WA",
+        v:"20181010"
       }
       axios.get(endpoint + new URLSearchParams(parameters))
         .then(Response => {
-          console.log(Response)
+          console.log(Response.data.response.groups[0].items)
+          this.setState({
+            venues: Response.data.response.groups[0].items
+          })
         })
         .catch(error => {
             console.log(error)
