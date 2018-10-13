@@ -22,16 +22,31 @@ class MapContainer extends Component {
           console.log(Response.data.response.groups[0].items)
           this.setState({
             venues: Response.data.response.groups[0].items
-          })
+          }, this.getMarkers())
         })
         .catch(error => {
             console.log(error)
         })
     }
+    
+    getMarkers = () => {
+      this.state.venues.map(myVenue => {
+        
+        var marker = new window.google.maps.Marker({
+          position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
+          map: Map,
+          title: myVenue.venue.name,
+          
+        })
+        
+      })
+    }
+    
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>
     }
+    
     return (
         <Map 
           google={this.props.google} 
@@ -42,11 +57,11 @@ class MapContainer extends Component {
             lng: -122.367408
           }}>
         <Marker onClick={this.onMarkerClick}
-                position={{lat:47.6918 , lng:-122.4031}}
-                name={'Golden Gardens'} />
+                position={{lat: 47, lng: -122}}
+                title={'Golden Gardens'} />
         <Marker onClick={this.onMarkerClick}
                 position={{lat:47.6608683, lng:-122.4328379}}
-                name={'Discovery Park Beach'}/>
+                title={'Discovery Park Beach'}/>
         <Marker onClick={this.onMarkerClick}
                 position={{lat:47.5791, lng:-122.4114}}
                 name={'Alki Beach'}/>
