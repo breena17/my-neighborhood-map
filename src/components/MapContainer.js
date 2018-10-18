@@ -3,7 +3,8 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios'
 class MapContainer extends Component {
     state = {
-      venues:[]
+      venues:[],
+      markers:[]
     }
     componentDidMount() {
       this.getVenues()
@@ -31,14 +32,13 @@ class MapContainer extends Component {
     
     getMarkers = () => {
       this.state.venues.map(myVenue => {
-        
-        var marker = new window.google.maps.Marker({
-          position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
-          map: Map,
-          title: myVenue.venue.name,
-          
-        })
-        
+          let marker = new window.google.maps.Marker({
+            position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
+            map: Map,
+            title: myVenue.venue.name,
+            id: myVenue.venue.id 
+          })
+          this.markers.push(marker)
       })
     }
     
@@ -58,10 +58,10 @@ class MapContainer extends Component {
           }}>
         <Marker onClick={this.onMarkerClick}
                 position={{lat: 47, lng: -122}}
-                title={'Golden Gardens'} />
+                title={this.state.markers.title}/>
         <Marker onClick={this.onMarkerClick}
                 position={{lat:47.6608683, lng:-122.4328379}}
-                title={'Discovery Park Beach'}/>
+                title={this.state.markers.title}/>
         <Marker onClick={this.onMarkerClick}
                 position={{lat:47.5791, lng:-122.4114}}
                 name={'Alki Beach'}/>

@@ -28,3 +28,12 @@ h1 {
   font-size: 2em;
   text-shadow: 2px 2px #525252;
 }
+#sidebar {
+  position: fixed;
+  top: 100;
+  left: 0;
+  width: 400px;
+  max-width: 100%;
+  height: calc(100% - 101px);
+  background-color: white;
+}
