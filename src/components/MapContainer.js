@@ -48,18 +48,18 @@ class MapContainer extends Component {
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>
-    }
-    console.log(this.state.venues)
-    this.state.venues.map(myVenue => {
-      let marker = new window.google.maps.Marker({
+    }/*
+    this.state.venues.map((myVenue,key) => {
+      new window.google.maps.Marker({
         position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
-        map: Map,
+        setMap: Map,
         title: myVenue.venue.name,
         id: myVenue.venue.id 
       })
-      this.state.markers.push(marker)
-      console.log(marker)
-    })
+      this.state.markers.push(myVenue)
+
+      //console.log(this.state.markers)
+    })*/
     
   
     return (
@@ -71,21 +71,12 @@ class MapContainer extends Component {
             lat: 47.6194,
             lng: -122.6031
           }}>
-        <Marker onClick={this.onMarkerClick}
-                position={{lat: 47.6918, lng: -122.4031}}
-                title={this.state.markers.title}/>
-        <Marker onClick={this.onMarkerClick}
-                position={{lat:47.6608683, lng:-122.4328379}}
-                title={this.state.markers.title}/>
-        <Marker onClick={this.onMarkerClick}
-                position={{lat:47.5791, lng:-122.4114}}
-                title={'Alki Beach'}/>
-        <Marker onClick={this.onMarkerClick}
-                position={{lat:47.7048, lng:-122.2154}}
-                title={'Juanita Beach Park'}/>
-        <Marker onClick={this.onMarkerClick}
-                position={{lat:47.6194, lng:-122.3618}}
-                title={'Myrtle Edwards Park'}/>
+          {this.state.venues.map((myVenue,id) => 
+          <Marker position={{lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng}}
+                  title={myVenue.venue.name}
+                  id={myVenue.venue.id}
+                  key={id}
+                  />)}
         <InfoWindow onClose={this.onInfoWindowClose}>
             <div>
               <h1>Marker</h1>
