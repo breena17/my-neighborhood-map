@@ -4,7 +4,10 @@ import axios from 'axios'
 class MapContainer extends Component {
     state = {
       venues:[],
-      markers:[]
+      markers:[],
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {}
     }
     componentDidMount() {
       this.getVenues()
@@ -31,37 +34,18 @@ class MapContainer extends Component {
             console.log(error)
         })
     }
-    /*
-    getMarkers = () => {
-      
-      this.state.venues.map(myVenue => {
-          let marker = new window.google.maps.Marker({
-            position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
-            map: Map,
-            title: myVenue.venue.name,
-            id: myVenue.venue.id 
-          })
-          this.markers.push(marker)
+    onMarkerClick = (props,marker,e) => {
+      this.setState({
+        selectedPlace: props,
+        activeMarker: marker,
+        showingInfoWindow: true
       })
-    }*/
-    
+    }
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>
-    }/*
-    this.state.venues.map((myVenue,key) => {
-      new window.google.maps.Marker({
-        position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
-        setMap: Map,
-        title: myVenue.venue.name,
-        id: myVenue.venue.id 
-      })
-      this.state.markers.push(myVenue)
-
-      //console.log(this.state.markers)
-    })*/
+    }
     
-  
     return (
         <Map 
           google={this.props.google} 
@@ -76,12 +60,15 @@ class MapContainer extends Component {
                   title={myVenue.venue.name}
                   id={myVenue.venue.id}
                   key={id}
+                  onClick={this.onMarkerClick}
                   />)}
-        <InfoWindow onClose={this.onInfoWindowClose}>
-            <div>
-              <h1>Marker</h1>
-            </div>
-        </InfoWindow>
+          <InfoWindow onClose={this.onInfoWindowClose}
+                      marker={this.state.activeMarker}
+                      visable={this.state.showingInfoWindow}>
+              <div>
+                <h1>Marker</h1>
+              </div>
+          </InfoWindow>
         </Map>  
     );
   }
