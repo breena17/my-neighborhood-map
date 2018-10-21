@@ -7,7 +7,7 @@ class MapContainer extends Component {
       markers:[],
       showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {}
+      selectedPlace: []
     }
     componentDidMount() {
       this.getVenues()
@@ -41,13 +41,30 @@ class MapContainer extends Component {
         showingInfoWindow: true
       })
     }
+    onInfoWindowClose = () => {
+      this.setState({
+        selectedPlace: null,
+        activeMarker: null,
+        showingInfoWindow: false
+      })
+    }
+    onMapClick = () => {
+      if (this.state.showingInfoWindow) {
+        this.setState({
+          showingInfoWindow: false,
+          activeMarker: null,
+          selectedPlace: null
+        })
+      }
+    }
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>
     }
     
     return (
-        <Map 
+        <Map
+          onClick={this.onMapClick} 
           google={this.props.google} 
           zoom={10}
           style={{height: 'calc(100% - 101px)'}}
@@ -66,7 +83,7 @@ class MapContainer extends Component {
                       marker={this.state.activeMarker}
                       visable={this.state.showingInfoWindow}>
               <div>
-                <h1>Marker</h1>
+                <h1>{this.state.selectedPlace.title}</h1>
               </div>
           </InfoWindow>
         </Map>  
