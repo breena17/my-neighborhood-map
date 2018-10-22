@@ -6,8 +6,8 @@ class MapContainer extends Component {
       venues:[],
       markers:[],
       showingInfoWindow: false,
-      activeMarker: {},
-      selectedPlace: []
+      activeMarker: [],
+      selectedPlace: {}
     }
     componentDidMount() {
       this.getVenues()
@@ -21,6 +21,7 @@ class MapContainer extends Component {
         near:"Seattle, WA",
         v:"20181010"
       }
+      //fetch foursquare data with axios and set venues state
       axios.get(endpoint + new URLSearchParams(parameters))
         .then(Response => {
           console.log(Response.data.response.groups[0].items)
@@ -34,6 +35,7 @@ class MapContainer extends Component {
             console.log(error)
         })
     }
+    //when marker is clicked, infowindow shows, marker states updates on click
     onMarkerClick = (props,marker,e) => {
       this.setState({
         selectedPlace: props,
@@ -41,6 +43,7 @@ class MapContainer extends Component {
         showingInfoWindow: true
       })
     }
+    //when infowindow is closed, infowindow is hidden, marker states update
     onInfoWindowClose = () => {
       this.setState({
         selectedPlace: null,
@@ -48,12 +51,11 @@ class MapContainer extends Component {
         showingInfoWindow: false
       })
     }
+    //when map is clicked, infowindow is hidden, marker states update
     onMapClick = () => {
       if (this.state.showingInfoWindow) {
         this.setState({
-          showingInfoWindow: false,
-          activeMarker: null,
-          selectedPlace: null
+          showingInfoWindow: false
         })
       }
     }
@@ -72,18 +74,20 @@ class MapContainer extends Component {
             lat: 47.6194,
             lng: -122.6031
           }}>
+          {/*map thru venues state to create markers*/}
           {this.state.venues.map((myVenue,id) => 
           <Marker position={{lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng}}
                   title={myVenue.venue.name}
                   id={myVenue.venue.id}
                   key={id}
                   onClick={this.onMarkerClick}
-                  />)}
+                  />
+          )}
           <InfoWindow onClose={this.onInfoWindowClose}
-                      marker={this.state.activeMarker}
+                      marker={this.state.selectedPlace}
                       visable={this.state.showingInfoWindow}>
               <div>
-                <h1>{this.state.selectedPlace.title}</h1>
+                <h1>{this.state.activeMarker.title}</h1>
               </div>
           </InfoWindow>
         </Map>  
