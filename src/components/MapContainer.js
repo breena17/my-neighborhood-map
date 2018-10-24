@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios'
+import InfoWindow from './InfoWindow'
 class MapContainer extends Component {
     state = {
       venues:[],
