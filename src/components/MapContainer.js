@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Map, Marker,InfoWindow, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios'
 //import InfoWindow from './InfoWindow'
 class MapContainer extends Component {
@@ -89,7 +89,7 @@ class MapContainer extends Component {
                       marker={this.state.activeMarker}
                       visible={this.state.showingInfoWindow}>
                 <div>
-                  <h1>{this.state.selectedPlace.name}</h1>
+                  <h2>{this.state.selectedPlace.title}</h2>
                 </div>
           </InfoWindow>
         </Map>  
