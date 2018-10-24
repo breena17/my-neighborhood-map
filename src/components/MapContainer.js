@@ -45,9 +45,8 @@ class MapContainer extends Component {
       });
     }
     //when infowindow is closed, infowindow is hidden, marker states update
-    onInfoWindowClose = () => {
+    onInfoWindowClose = (props) => {
       this.setState({
-        selectedPlace: null,
         activeMarker: null,
         showingInfoWindow: false
       })
