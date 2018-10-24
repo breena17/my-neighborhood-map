@@ -42,6 +42,14 @@ class InfoWindow extends Component {
         const info = this.infowindow = new google.maps.InfoWindow({
             content:''
         });
+        google.maps.event.addListener(info, 'closeclick', this.onClose.bind(this))
+        google.maps.event.addListener(info, 'domready', this.onOpen.bind(this));
+    }
+    onOpen() {
+        if (this.props.onOpen) this.props.onOpen();
+    }
+    onClose() {
+        if (this.props.onClose) this.props.onClose();
     }
     render() {
         return null;
