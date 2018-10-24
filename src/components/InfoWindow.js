@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOMServer from 'react-dom/server'
 
-class InfoWindow extends Component {
+class InfoWindow extends React.Component {
     componentDidUpdate(prevProps) {
         //map instance becomes available
         if (this.props.map !== prevProps.map) {
@@ -37,7 +37,7 @@ class InfoWindow extends Component {
         return ReactDOMServer.renderToString(children);
     }
     renderInfoWindow() {
-        let {map, google, initialCenter} = this.props;
+        let {map, google, mapCenter} = this.props;
 
         const info = this.infowindow = new google.maps.InfoWindow({
             content:''

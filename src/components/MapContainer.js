@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker,InfoWindow, GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios'
-import InfoWindow from './InfoWindow'
+//import InfoWindow from './InfoWindow'
 class MapContainer extends Component {
     state = {
       venues:[],
       markers:[],
       showingInfoWindow: false,
-      activeMarker: [],
+      activeMarker: {},
       selectedPlace: {}
     }
     componentDidMount() {
@@ -37,12 +37,12 @@ class MapContainer extends Component {
         })
     }
     //when marker is clicked, infowindow shows, marker states updates on click
-    onMarkerClick = (props,marker,e) => {
+    onMarkerClick = (props, marker, e) => {
       this.setState({
         selectedPlace: props,
         activeMarker: marker,
         showingInfoWindow: true
-      })
+      });
     }
     //when infowindow is closed, infowindow is hidden, marker states update
     onInfoWindowClose = () => {
@@ -53,14 +53,14 @@ class MapContainer extends Component {
       })
     }
     //when map is clicked, infowindow is hidden, marker states update
-    onMapClick = () => {
+    onMapClick = (props) => {
       if (this.state.showingInfoWindow) {
         this.setState({
           showingInfoWindow: false,
           activeMarker: null
-        });
+        })
       }
-    }
+    };
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>
@@ -86,14 +86,14 @@ class MapContainer extends Component {
                   />
           )}
           <InfoWindow onClose={this.onInfoWindowClose}
-                      marker={this.state.selectedPlace}
+                      marker={this.state.activeMarker}
                       visible={this.state.showingInfoWindow}>
                 <div>
-                  <h1>{this.state.activeMarker.title}</h1>
+                  <h1>{this.state.selectedPlace.name}</h1>
                 </div>
           </InfoWindow>
         </Map>  
-    );
+    )
   }
 }
 
