@@ -35,7 +35,7 @@ h1 {
   width: 400px;
   max-width: 100%;
   height: calc(100% - 101px);
-  background-color: white;
+  background-color: transparent;
 }
 /* Position and sizing of burger button */
 .bm-burger-button {
@@ -66,9 +66,14 @@ h1 {
  
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background:whitesmoke;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
+}
+
+.bm-menu-wrap {
+  position: absolute!important;
+  width: 100%!important;
 }
  
 /* Wrapper for item list */
