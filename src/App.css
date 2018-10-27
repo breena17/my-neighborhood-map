@@ -69,11 +69,13 @@ h1 {
   background:whitesmoke;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
+  overflow: hidden!important;
+  height: calc(100% - 101px)!important;
 }
 
 .bm-menu-wrap {
   position: absolute!important;
-  width: 100%!important;
+
 }
  
 /* Wrapper for item list */
