@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import ReactDOMServer from 'react-dom/server'
 
 class InfoWindow extends React.Component {
@@ -55,4 +55,4 @@ class InfoWindow extends React.Component {
         return null;
     }
 }
-export default InfoWindow
+export default InfoWindow*/
