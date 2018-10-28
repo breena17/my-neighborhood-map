@@ -10,6 +10,9 @@ class MapContainer extends Component {
       activeMarker: {},
       selectedPlace: {}
     }
+    gm_authFailure() {
+      alert("Authentication Failed :( please double check your credentials.")
+    }
     componentDidMount() {
       this.getVenues()
     }

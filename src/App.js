@@ -13,7 +13,7 @@ class App extends Component {
           <h1>BeachFinder</h1>
         </nav>
         <div id="map">
-          <MapContainer {...this.state}/>
+          <MapContainer/>
         </div>
         <div id="side-nav">
           <SideNav/>
