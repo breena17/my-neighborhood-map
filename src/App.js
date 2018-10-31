@@ -14,9 +14,7 @@ class App extends Component {
     selectedPlace: {},
     menuOpen: false
   }
-  gm_authFailure() {
-    alert("Authentication Failed :( please double check your credentials.")
-  }
+  
   componentDidMount() {
     this.getVenues()
   }
@@ -80,7 +78,7 @@ class App extends Component {
   render() {
     
     return (
-      <div>
+      <div id="app">
         <nav id="top-nav">
           <h1>BeachFinder</h1>
         </nav>
@@ -96,6 +94,8 @@ class App extends Component {
         <div id="side-nav">
           <SideNav
             {...this.state} 
+            pageWrapId={"nav-list"}
+            outerContainerId={"app"}
             venues={this.state.venues}
             isOpen={this.state.menuOpen}
             
