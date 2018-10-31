@@ -1,68 +1,8 @@
 import React, { Component } from 'react';
 import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
-import axios from 'axios'
-//import InfoWindow from './InfoWindow'
+
 class MapContainer extends Component {
-    state = {
-      venues:[],
-      markers:[],
-      showingInfoWindow: false,
-      activeMarker: {},
-      selectedPlace: {}
-    }
-    gm_authFailure() {
-      alert("Authentication Failed :( please double check your credentials.")
-    }
-    componentDidMount() {
-      this.getVenues()
-    }
-    getVenues = () => {
-      const endpoint = "https://api.foursquare.com/v2/venues/explore?"
-      const parameters = {
-        client_id:"L105UNFOLBWBYAH2I4KRUPGRZZVZXIY3NFZAFZ0V4OSRWXHN",
-        client_secret:"531CGS50AMTVAHMAJXV1BGE35KC4445ZCG30O4QWBB5BR3LR",
-        query:"beach",
-        near:"Seattle, WA",
-        v:"20181010"
-      }
-      //fetch foursquare data with axios and set venues state
-      axios.get(endpoint + new URLSearchParams(parameters))
-        .then(Response => {
-          console.log(Response.data.response.groups[0].items)
-          this.setState({
-            venues: Response.data.response.groups[0].items
-          }, () => {
-            this.setState({ load: false})
-          } )
-        })
-        .catch(error => {
-            console.log(error)
-        })
-    }
-    //when marker is clicked, infowindow shows, marker states updates on click
-    onMarkerClick = (props, marker, e) => {
-      this.setState({
-        selectedPlace: props,
-        activeMarker: marker,
-        showingInfoWindow: true
-      });
-    }
-    //when infowindow is closed, infowindow is hidden, marker states update
-    onInfoWindowClose = (props) => {
-      this.setState({
-        activeMarker: null,
-        showingInfoWindow: false
-      })
-    }
-    //when map is clicked, infowindow is hidden, marker states update
-    onMapClick = (props) => {
-      if (this.state.showingInfoWindow) {
-        this.setState({
-          showingInfoWindow: false,
-          activeMarker: null
-        })
-      }
-    };
+
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>
@@ -70,7 +10,7 @@ class MapContainer extends Component {
     
     return (
         <Map
-          onClick={this.onMapClick} 
+          onClick={this.props.onMapClick} 
           google={this.props.google} 
           zoom={10}
           style={{height: 'calc(100% - 101px)'}}
@@ -79,19 +19,22 @@ class MapContainer extends Component {
             lng: -122.6031
           }}>
           {/*map thru venues state to create markers*/}
-          {this.state.venues.map((myVenue,id) => 
+          {this.props.venues.map((myVenue,id) => 
           <Marker position={{lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng}}
                   title={myVenue.venue.name}
                   id={myVenue.venue.id}
                   key={id}
-                  onClick={this.onMarkerClick}
+                  onClick={this.props.onMarkerClick}
                   />
           )}
-          <InfoWindow onClose={this.onInfoWindowClose}
-                      marker={this.state.activeMarker}
-                      visible={this.state.showingInfoWindow}>
+          
+          <InfoWindow onClose={this.props.onClose}
+                      marker={this.props.activeMarker}
+                      visible={this.props.showingInfoWindow}>
                 <div>
-                  <h2>{this.state.selectedPlace.title}</h2>
+                  {this.props.selectedPlace && (
+                    <h2>{this.props.selectedPlace.title}</h2>
+                  )}
                 </div>
           </InfoWindow>
         </Map>  

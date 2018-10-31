@@ -12,13 +12,16 @@ class SideNav extends Component {
     render() {
         
         return (
-            <Menu width={ '40%' }
-                  isOpen={this.state.menuOpen}>
-                 
-                <a id="home" className="menu-item" href="/">Home</a>
-                <a id="about" className="menu-item" href="/about">About</a>
-                <a id="contact" className="menu-item" href="/contact">Contact</a>
-                <a onClick={ this.showSettings } className="menu-item--small" href="">Settings</a>
+            <Menu 
+                width={ '40%' }
+                isOpen={this.state.menuOpen}
+            >
+                <ul>    
+                    {this.props.venues.forEach(venue => {
+                        console.log(venue);
+                        return <li>{venue.venue.name}</li>
+                    })}
+                </ul>
             </Menu>
         );
     }
