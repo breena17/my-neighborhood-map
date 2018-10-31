@@ -34,6 +34,7 @@ class MapContainer extends Component {
                 <div>
                   {this.props.selectedPlace && (
                     <h2>{this.props.selectedPlace.title}</h2>
+                    
                   )}
                 </div>
           </InfoWindow>
