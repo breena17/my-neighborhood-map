@@ -69,7 +69,7 @@ h1 {
   background:whitesmoke;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
-  overflow: hidden!important;
+  /*overflow: hidden!important;*/
   height: calc(100% - 101px)!important;
 }
 
@@ -92,4 +92,8 @@ h1 {
 /* Styling of overlay */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
+}
+/*Sidebar nav styling*/
+ul {
+    list-style-type: none;
 }
