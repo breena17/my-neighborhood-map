@@ -14,7 +14,7 @@ class SideNav extends Component {
         return (
             <Menu 
                 width={ '40%' }
-                isOpen={this.state.menuOpen}
+                isOpen={this.props.menuOpen}
             >
                 <ul>    
                     {this.props.venues.forEach(venue => {
