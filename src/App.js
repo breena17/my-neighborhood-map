@@ -12,7 +12,9 @@ class App extends Component {
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
-    menuOpen: false
+    menuOpen: false,
+    markerShowing: true
+    
   }
   
   componentDidMount() {
@@ -64,7 +66,11 @@ class App extends Component {
   handleStateChange (state) {
     this.setState({menuOpen: state.isOpen})
   }
-
+  //keeps query state in sync with markers
+  handleMarkers (state) {
+    this.setState({markerShowing: state.visibility})
+  }
+  
   //when map is clicked, infowindow is hidden, marker states update
   onMapClick = (props) => {
     if (this.state.showingInfoWindow) {
@@ -86,7 +92,7 @@ class App extends Component {
           <MapContainer 
             {...this.state}
             google={this.state.google}
-
+            visibility={this.state.markerShowing}
             onMarkerClick={this.onMarkerClick}
             onClose={this.onInfoWindowClose}
             onMapClick={this.onMapClick}/>

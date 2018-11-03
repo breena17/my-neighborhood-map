@@ -25,6 +25,7 @@ class MapContainer extends Component {
                   id={myVenue.venue.id}
                   key={id}
                   onClick={this.props.onMarkerClick}
+                  visible={this.props.markerShowing}
                   />
           )}
           
