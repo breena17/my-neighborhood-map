@@ -13,7 +13,7 @@ class SideNav extends Component {
     this.setState({query});
 
     this.props.venues.map(myVenue => {
-        const match = myVenue.venue.name.includes(query);
+        const match = myVenue.venue.name.toLowerCase().includes(query.toLowerCase());
     if (match) {
         this.setState({
             markerShowing: true
