@@ -43,6 +43,15 @@ class App extends Component {
           console.log(error)
       })
   }
+  componentDidUpdate() {
+    this.pushMarkers()
+  }
+  //adding markers to state
+  pushMarkers = () => {
+    this.state.venues.map((marker,id) => {
+    return  this.state.markers.push(marker)
+    })
+  }
   //when marker is clicked, infowindow shows, marker states updates on click
   onMarkerClick = (props, marker, e) => {
     console.log('test');
@@ -93,6 +102,7 @@ class App extends Component {
             {...this.state}
             google={this.state.google}
             visibility={this.state.markerShowing}
+            onChange={(state) => this.handleMarkers(state)}
             onMarkerClick={this.onMarkerClick}
             onClose={this.onInfoWindowClose}
             onMapClick={this.onMapClick}/>

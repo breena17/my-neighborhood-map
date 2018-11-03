@@ -27,6 +27,7 @@ class MapContainer extends Component {
                   onClick={this.props.onMarkerClick}
                   visible={this.props.markerShowing}
                   />
+          
           )}
           
           <InfoWindow onClose={this.props.onClose}

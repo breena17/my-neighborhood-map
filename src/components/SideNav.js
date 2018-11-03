@@ -4,26 +4,31 @@ import { slide as Menu } from 'react-burger-menu'
 
 class SideNav extends Component {
     state = {
-        menuOpen: false,
+        
         query:'',
-        search: [] 
+        search: [],
+        markerShowing: true 
     }
+    
     //filter venue markers based on search
   searchVenues = (query) => {
     this.setState({query});
 
     this.props.venues.map(myVenue => {
         const match = myVenue.venue.name.toLowerCase().includes(query.toLowerCase());
+        const marker = this.props.markers.find(marker => marker.venue.id === myVenue.venue.id);
     if (match) {
-        this.setState({
+        //marker.setVisible(true);
+        /*this.setState({
             markerShowing: true
-        })
+        })*/
     } else {
-        this.setState({
+        //marker.setVisible(false);
+        /*this.setState({
             markerShowing: false
-        })
+        })*/
     }
-    return match;
+    return marker;
     });
     this.updateQuery(query);
 }
@@ -40,7 +45,7 @@ class SideNav extends Component {
         event.preventDefault();
     }
     render() {
-        
+        let filtered = this.state.query ? this.state.search : this.props.venues;
         return (
             <Menu
                 width={ '40%' }
@@ -58,7 +63,7 @@ class SideNav extends Component {
                         />
                     
                     <ul className="list">
-                        {this.props.venues.map(myVenue => (
+                        {filtered.map(myVenue => (
                             <li className="nav-item"
                                 id={myVenue.venue.id}
                                 key={myVenue.venue.id}
