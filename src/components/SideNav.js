@@ -16,9 +16,9 @@ class SideNav extends Component {
                 width={ '40%' }
                 isOpen={this.props.menuOpen}>
                 <div className="listNav">
-                    <ul>
+                    <ul className="list">
                         {this.props.venues.map(myVenue => (
-                            <li
+                            <li className="nav-item"
                                 id={myVenue.venue.id}
                                 key={myVenue.venue.id}>
                                 <h2>{myVenue.venue.name}</h2>
