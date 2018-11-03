@@ -7,7 +7,7 @@ class MapContainer extends Component {
     if (!this.props.loaded) {
       return <div>Loading...</div>
     }
-    
+    let filterMarkers = this.props.query ? this.props.search : this.props.venues;
     return (
         <Map
           onClick={this.props.onMapClick} 
@@ -18,8 +18,8 @@ class MapContainer extends Component {
             lat: 47.6194,
             lng: -122.6031
           }}>
-          {/*map thru venues state to create markers*/}
-          {this.props.venues.map((myVenue,id) => 
+          {/*map thru venues state to create markers, filter markers on search*/}
+          {filterMarkers.map((myVenue,id) => 
           <Marker position={{lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng}}
                   title={myVenue.venue.name}
                   id={myVenue.venue.id}

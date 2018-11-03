@@ -88,17 +88,9 @@ class App extends Component {
         const match = myVenue.venue.name.toLowerCase().includes(query.toLowerCase());
         const marker = this.state.markers.find(marker => marker.venue.id === myVenue.venue.id);
     if (match) {
-        //marker.setVisible(true);
-        this.setState({
-            markerShowing: true
-        })
-    } else {
-        //marker.setVisible(false);
-        this.setState({
-            markerShowing: false
-        })
-    }
-    return marker;
+      return marker;  
+    } 
+    
     });
     this.updateQuery(query);
 }

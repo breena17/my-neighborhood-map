@@ -28,6 +28,7 @@ class SideNav extends Component {
                         />
                     
                     <ul className="list">
+                        {/*filter list based on search*/}
                         {filterList.map(myVenue => (
                             <li className="nav-item"
                                 id={myVenue.venue.id}
