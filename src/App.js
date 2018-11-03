@@ -13,7 +13,6 @@ class App extends Component {
     activeMarker: {},
     selectedPlace: {},
     menuOpen: false,
-    markerShowing: true,
     query:'',
     search: []
   }
@@ -55,14 +54,12 @@ class App extends Component {
   }
   //when marker is clicked, infowindow shows, marker states updates on click
   onMarkerClick = (props, marker, e) => {
-    console.log('test');
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true,
       menuOpen: true
     });
-    console.log(this.state);
   }
   //when infowindow is closed, infowindow is hidden, marker states update
   onInfoWindowClose = (props) => {
@@ -72,33 +69,18 @@ class App extends Component {
       menuOpen: false
     })
   }
+  
   //keeps state in sync with opening and closing of nav
   handleStateChange (state) {
     this.setState({menuOpen: state.isOpen})
   }
-  //keeps query state in sync with markers
-  handleMarkers (state) {
-    this.setState({markerShowing: state.visibility})
-  }
+  
   //filter venue markers based on search
   searchVenues = (query) => {
-    this.setState({query});
-
-    this.state.venues.map(myVenue => {
-        const match = myVenue.venue.name.toLowerCase().includes(query.toLowerCase());
-        const marker = this.state.markers.find(marker => marker.venue.id === myVenue.venue.id);
-    if (match) {
-      this.setState({
-        menuOpen: true
-      })
-      return marker;  
-    } else {
-      this.setState({
-        menuOpen: true
-      })
-    }
-    
-    });
+    this.setState({
+      query,
+      menuOpen:true
+    })
     this.updateQuery(query);
 }
   //filter venues based on search
@@ -144,11 +126,13 @@ class App extends Component {
             outerContainerId={"app"}
             venues={this.state.venues}
             isOpen={this.state.menuOpen}
+            onMarkerClick={this.onMarkerClick}
             query={this.state.query}
             search={this.state.search}
             updateQuery={this.updateQuery}
             searchVenues={this.searchVenues}
             onStateChange={(state) => this.handleStateChange(state)}
+            
           />
         </div>
       </div>  
