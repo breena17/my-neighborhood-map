@@ -68,7 +68,7 @@ h1 {
 /* General sidebar styles */
 .bm-menu {
   background:whitesmoke;
-  padding: 2.5em 1.5em 0;
+  padding: 0 1.5em 0;
   font-size: 1.15em;
   /*overflow: hidden!important;*/
   height: calc(100% - 101px)!important;
@@ -105,7 +105,20 @@ h2 {
   border-style: solid;
   text-align: center;
   margin-bottom: .5em;
+  border-width: 2px;
+}
+.nav-item:hover {
+  border-width: 3px;
+  box-shadow: 1px 1px 5px 1px rgba(193, 227, 238, 0.75);
+  cursor: pointer;
+}
+.listNav {
+  text-align: center;
 }
 .list {
   padding-inline-start: 0px!important;
+}
+/*search bar styling */
+.input {
+  text-align: center;
 }

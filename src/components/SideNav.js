@@ -16,6 +16,15 @@ class SideNav extends Component {
                 width={ '40%' }
                 isOpen={this.props.menuOpen}>
                 <div className="listNav" aria-label="venue list">
+                    <input className="input"
+                           tabIndex="0"
+                           placeholder="Search for beaches..."
+                           name="search"
+                           title="Search Beaches"
+                           type="search"
+                           aria-label="seach beaches"
+                        />
+                    
                     <ul className="list">
                         {this.props.venues.map(myVenue => (
                             <li className="nav-item"
