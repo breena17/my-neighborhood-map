@@ -36,7 +36,7 @@ class SideNav extends Component {
                                 tabIndex="0"
                                 aria-label={myVenue.venue.name}
                                 role="menuItem"
-                                /*onClick={this.props.onMarkerClick()}*/>
+                                /*onClick={this.props.showingInfoWindow}*/>
                                 
                                 <h2>{myVenue.venue.name}</h2>
                                 <p>{myVenue.venue.location.address}</p>
