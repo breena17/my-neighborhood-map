@@ -13,8 +13,9 @@ class App extends Component {
     activeMarker: {},
     selectedPlace: {},
     menuOpen: false,
-    markerShowing: true
-    
+    markerShowing: true,
+    query:'',
+    search: []
   }
   
   componentDidMount() {
@@ -79,7 +80,37 @@ class App extends Component {
   handleMarkers (state) {
     this.setState({markerShowing: state.visibility})
   }
-  
+  //filter venue markers based on search
+  searchVenues = (query) => {
+    this.setState({query});
+
+    this.state.venues.map(myVenue => {
+        const match = myVenue.venue.name.toLowerCase().includes(query.toLowerCase());
+        const marker = this.state.markers.find(marker => marker.venue.id === myVenue.venue.id);
+    if (match) {
+        //marker.setVisible(true);
+        this.setState({
+            markerShowing: true
+        })
+    } else {
+        //marker.setVisible(false);
+        this.setState({
+            markerShowing: false
+        })
+    }
+    return marker;
+    });
+    this.updateQuery(query);
+}
+  //filter venues based on search
+  updateQuery = (query) => {
+    if (query) {
+      const search = this.state.venues.filter( myVenue => myVenue.venue.name.toLowerCase().includes(query.toLowerCase()));
+      this.setState({search})
+    } else {
+      this.setState({ search: [] })
+    }
+  }
   //when map is clicked, infowindow is hidden, marker states update
   onMapClick = (props) => {
     if (this.state.showingInfoWindow) {
@@ -114,7 +145,10 @@ class App extends Component {
             outerContainerId={"app"}
             venues={this.state.venues}
             isOpen={this.state.menuOpen}
-            
+            query={this.state.query}
+            search={this.state.search}
+            updateQuery={this.updateQuery}
+            searchVenues={this.searchVenues}
             onStateChange={(state) => this.handleStateChange(state)}
           />
         </div>

@@ -3,49 +3,14 @@ import { slide as Menu } from 'react-burger-menu'
 
 
 class SideNav extends Component {
-    state = {
-        
-        query:'',
-        search: [],
-        markerShowing: true 
-    }
     
-    //filter venue markers based on search
-  searchVenues = (query) => {
-    this.setState({query});
-
-    this.props.venues.map(myVenue => {
-        const match = myVenue.venue.name.toLowerCase().includes(query.toLowerCase());
-        const marker = this.props.markers.find(marker => marker.venue.id === myVenue.venue.id);
-    if (match) {
-        //marker.setVisible(true);
-        /*this.setState({
-            markerShowing: true
-        })*/
-    } else {
-        //marker.setVisible(false);
-        /*this.setState({
-            markerShowing: false
-        })*/
-    }
-    return marker;
-    });
-    this.updateQuery(query);
-}
-  //filter venues based on search
-  updateQuery = (query) => {
-    if (query) {
-      const search = this.props.venues.filter( myVenue => myVenue.venue.name.toLowerCase().includes(query.toLowerCase()));
-      this.setState({search})
-    } else {
-      this.setState({ search: [] })
-    }
-  }
+    
+    
     showSettings(event) {
         event.preventDefault();
     }
     render() {
-        let filtered = this.state.query ? this.state.search : this.props.venues;
+        let filterList = this.props.query ? this.props.search : this.props.venues;
         return (
             <Menu
                 width={ '40%' }
@@ -59,11 +24,11 @@ class SideNav extends Component {
                            title="Search Beaches"
                            type="search"
                            aria-label="search beaches"
-                           onChange={(event) => this.searchVenues(event.target.value)}
+                           onChange={(event) => this.props.searchVenues(event.target.value)}
                         />
                     
                     <ul className="list">
-                        {filtered.map(myVenue => (
+                        {filterList.map(myVenue => (
                             <li className="nav-item"
                                 id={myVenue.venue.id}
                                 key={myVenue.venue.id}
