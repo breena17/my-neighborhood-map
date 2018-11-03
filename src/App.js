@@ -79,10 +79,10 @@ class App extends Component {
     
     return (
       <div id="app">
-        <nav id="top-nav">
+        <nav id="top-nav" aria-label="header">
           <h1>BeachFinder</h1>
         </nav>
-        <div id="map">
+        <div id="map" aria-label="map" role="application">
           <MapContainer 
             {...this.state}
             google={this.state.google}
@@ -91,7 +91,7 @@ class App extends Component {
             onClose={this.onInfoWindowClose}
             onMapClick={this.onMapClick}/>
         </div>
-        <div id="side-nav">
+        <div id="side-nav" aria-label="venue navigation">
           <SideNav
             {...this.state} 
             pageWrapId={"nav-list"}
