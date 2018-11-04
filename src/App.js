@@ -61,8 +61,8 @@ class App extends Component {
       menuOpen: true
     })
     //this.markerAnimate(marker); 
-    marker.addListener('click', this.markerAnimate(marker));
-  }
+    //marker.addListener('click', this.markerAnimate(marker));
+  }/*
   markerAnimate = (marker) => {
     //marker.setAnimation(window.google.maps.Animation.BOUNCE)
     if (marker.getAnimation() !== null) {
@@ -70,7 +70,7 @@ class App extends Component {
     } else {
       marker.setAnimation(window.google.maps.Animation.BOUNCE);
     }
-  }
+  }*/
   
   //when infowindow is closed, infowindow is hidden, marker states update
   onInfoWindowClose = (props) => {
@@ -90,7 +90,8 @@ class App extends Component {
   searchVenues = (query) => {
     this.setState({
       query,
-      menuOpen:true
+      menuOpen:true,
+      showingInfoWindow:false
     })
     this.updateQuery(query);
 }
