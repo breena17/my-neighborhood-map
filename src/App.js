@@ -8,7 +8,7 @@ import SideNav from './components/SideNav'
 class App extends Component {
   state = {
     venues:[],
-    markers:[],
+    //markers:[],
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
@@ -42,7 +42,7 @@ class App extends Component {
       .catch(error => {
           console.log(error)
       })
-  }
+  }/*
   componentDidUpdate() {
     this.pushMarkers()
   }
@@ -51,7 +51,7 @@ class App extends Component {
     this.state.venues.map((marker,id) => {
     return  this.state.markers.push(marker)
     })
-  }
+  }*/
   //when marker is clicked, infowindow shows, marker states updates on click
   onMarkerClick = (props, marker, e) => {
     this.setState({
@@ -71,7 +71,12 @@ class App extends Component {
       marker.setAnimation(window.google.maps.Animation.BOUNCE);
     }
   }*/
-  
+  onListClick= (props,marker,e) => {
+    this.setState({
+      showingInfoWindow: true,
+      menuOpen: true
+    })
+  }
   //when infowindow is closed, infowindow is hidden, marker states update
   onInfoWindowClose = (props) => {
     this.setState({
@@ -126,7 +131,7 @@ class App extends Component {
             {...this.state}
             google={this.state.google}
             visibility={this.state.markerShowing}
-            onChange={(state) => this.handleMarkers(state)}
+            //onChange={(state) => this.handleMarkers(state)}
             onMarkerClick={this.onMarkerClick}
             onClose={this.onInfoWindowClose}
             onMapClick={this.onMapClick}
@@ -139,7 +144,7 @@ class App extends Component {
             outerContainerId={"app"}
             venues={this.state.venues}
             isOpen={this.state.menuOpen}
-            onMarkerClick={this.onMarkerClick}
+            onListClick={this.onListClick}
             query={this.state.query}
             search={this.state.search}
             updateQuery={this.updateQuery}
