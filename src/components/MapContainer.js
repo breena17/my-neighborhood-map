@@ -26,6 +26,7 @@ class MapContainer extends Component {
                   key={id}
                   onClick={this.props.onMarkerClick}
                   visible={this.props.markerShowing}
+                  //animation={this.props.google.maps.Animation.DROP}
                   />
           
           )}

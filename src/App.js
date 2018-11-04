@@ -59,8 +59,19 @@ class App extends Component {
       activeMarker: marker,
       showingInfoWindow: true,
       menuOpen: true
-    });
+    })
+    //this.markerAnimate(marker); 
+    marker.addListener('click', this.markerAnimate(marker));
   }
+  markerAnimate = (marker) => {
+    //marker.setAnimation(window.google.maps.Animation.BOUNCE)
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(window.google.maps.Animation.BOUNCE);
+    }
+  }
+  
   //when infowindow is closed, infowindow is hidden, marker states update
   onInfoWindowClose = (props) => {
     this.setState({
@@ -117,7 +128,8 @@ class App extends Component {
             onChange={(state) => this.handleMarkers(state)}
             onMarkerClick={this.onMarkerClick}
             onClose={this.onInfoWindowClose}
-            onMapClick={this.onMapClick}/>
+            onMapClick={this.onMapClick}
+            markerAnimate={this.markerAnimate}/>
         </div>
         <div id="side-nav" aria-label="venue navigation">
           <SideNav
