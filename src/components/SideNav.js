@@ -36,7 +36,7 @@ class SideNav extends Component {
                                 tabIndex="0"
                                 aria-label={myVenue.venue.name}
                                 role="menuItem"
-                                onClick={this.props.onListClick}>
+                                onClick={() => {this.props.onListClick(myVenue.venue)}}>
                                 
                                 <h2>{myVenue.venue.name}</h2>
                                 <p>{myVenue.venue.location.address}</p>

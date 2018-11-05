@@ -70,20 +70,21 @@ class App extends Component {
       marker.setAnimation(window.google.maps.Animation.BOUNCE);
     }
   }*/
-  onListClick= (props) => {
-    let filterList = this.state.query ? this.state.search : this.state.venues;
-    filterList.map((myVenue)=> {
-      const marker = filterList.find(marker => marker.id === myVenue.venue.id);
-      this.setState ({
-      activeMarker: marker,
-      showingInfoWindow: true,
-      menuOpen: true
-    })
-    return marker;
-    }) 
-    
-    
-  }
+  onListClick= (o) => {
+    this.setState({selectedPlace: o})
+  //let filterList = this.state.query ? this.state.search : this.state.venues;
+  //filterList.map((myVenue)=> {
+    //const marker = filterList.find(marker => marker.id === myVenue.venue.id);
+   // this.setState ({
+    //activeMarker: marker,
+    //showingInfoWindow: true,
+    //menuOpen: true
+  //})
+  //return marker;
+  //})
+
+
+}
   //when infowindow is closed, infowindow is hidden, marker states update
   onInfoWindowClose = (props) => {
     this.setState({
