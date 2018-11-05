@@ -8,7 +8,6 @@ import SideNav from './components/SideNav'
 class App extends Component {
   state = {
     venues:[],
-    //markers:[],
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
@@ -71,11 +70,19 @@ class App extends Component {
       marker.setAnimation(window.google.maps.Animation.BOUNCE);
     }
   }*/
-  onListClick= (props,marker,e) => {
-    this.setState({
+  onListClick= (props) => {
+    let filterList = this.state.query ? this.state.search : this.state.venues;
+    filterList.map((myVenue)=> {
+      const marker = filterList.find(marker => marker.id === myVenue.venue.id);
+      this.setState ({
+      activeMarker: marker,
       showingInfoWindow: true,
       menuOpen: true
     })
+    return marker;
+    }) 
+    
+    
   }
   //when infowindow is closed, infowindow is hidden, marker states update
   onInfoWindowClose = (props) => {

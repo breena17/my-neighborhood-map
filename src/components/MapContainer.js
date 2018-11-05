@@ -29,7 +29,7 @@ class MapContainer extends Component {
                   //animation={this.props.markerAnimate}
                   />
           
-          )}
+          ) }
           
           <InfoWindow onClose={this.props.onClose}
                       marker={this.props.activeMarker}
