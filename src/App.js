@@ -53,12 +53,14 @@ class App extends Component {
   }*/
   //when marker is clicked, infowindow shows, marker states updates on click
   onMarkerClick = (props, marker, e) => {
+    console.log(marker)
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true,
       menuOpen: true
     })
+    //const venue =this.state.venues.find(venue =>venue.id = marker.id);
     //this.markerAnimate(marker); 
     //marker.addListener('click', this.markerAnimate(marker));
   }/*
@@ -70,21 +72,46 @@ class App extends Component {
       marker.setAnimation(window.google.maps.Animation.BOUNCE);
     }
   }*/
-  onListClick= (o) => {
-    this.setState({selectedPlace: o})
-  //let filterList = this.state.query ? this.state.search : this.state.venues;
-  //filterList.map((myVenue)=> {
-    //const marker = filterList.find(marker => marker.id === myVenue.venue.id);
-   // this.setState ({
-    //activeMarker: marker,
-    //showingInfoWindow: true,
-    //menuOpen: true
-  //})
-  //return marker;
-  //})
+  onListClick= (props,marker,e) => {
+    //const marker = this.state.selectedPlace.find(marker => marker.id = myVenue.venue.id);
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true,
+      menuOpen: true 
+    })
+    //if(this.state.selectedPlace.id === this.marker.id) {
+      //console.log('match')
+      this.onMarkerClick(props,marker,e)
+    }
+    /*
+    let filterList = this.state.query ? this.state.search : this.state.venues;
+    filterList.map((myVenue)=> {
+      const marker = filterList.find(myVenue => selectedPlace.id === myVenue.venue.id);
+      this.setState ({
+      activeMarker: marker,
+      showingInfoWindow: true,
+      menuOpen: true
+    })
+    return marker;
+    })
+*//*let filterList = this.state.query ? this.state.search : this.state.venues;
+    filterList.map((myVenue)=> {
+    if(this.state.selectedPlace.id === this.state.myVenue.venue.id) {
+      this.setState({
+        activeMarker: !null,
+        showingInforWindow: true,
+        menuOpen: true
+      })
+    }
+    this.onMarkerClick(o)
+  })
+   
+    
+    */
+  
 
 
-}
   //when infowindow is closed, infowindow is hidden, marker states update
   onInfoWindowClose = (props) => {
     this.setState({
@@ -157,6 +184,7 @@ class App extends Component {
             search={this.state.search}
             updateQuery={this.updateQuery}
             searchVenues={this.searchVenues}
+            activeMarker={this.state.activeMarker}
             onStateChange={(state) => this.handleStateChange(state)}
             
           />
