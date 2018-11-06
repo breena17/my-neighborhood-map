@@ -13,7 +13,8 @@ class App extends Component {
     selectedPlace: {},
     menuOpen: false,
     query:'',
-    search: []
+    search: [],
+    venuesToDisplay: []
   }
   
   componentDidMount() {
@@ -72,18 +73,32 @@ class App extends Component {
       marker.setAnimation(window.google.maps.Animation.BOUNCE);
     }
   }*/
-  onListClick= (props,marker,e) => {
-    //const marker = this.state.selectedPlace.find(marker => marker.id = myVenue.venue.id);
+  onListClick= (object) => {
+    //let filterList = this.state.query ? this.state.search : this.state.venues;
+    this.setState({selectedPlace: object})
+    this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
+      {venueId:object.id},
+      {venueName:object.name},
+      {venueLocation:object.location},
+      {open:false}
+    )})
+    /*filterList.map((myVenue)=> {
+    const marker = filterList.find(myVenue => object.id === myVenue.venue.id)
     this.setState({
-      selectedPlace: props,
+      //selectedPlace: object,
       activeMarker: marker,
       showingInfoWindow: true,
       menuOpen: true 
     })
+    return marker;
+    
     //if(this.state.selectedPlace.id === this.marker.id) {
       //console.log('match')
-      this.onMarkerClick(props,marker,e)
-    }
+      //this.onMarkerClick(object)
+  
+    });*/
+    console.log(object)
+  }
     /*
     let filterList = this.state.query ? this.state.search : this.state.venues;
     filterList.map((myVenue)=> {
@@ -109,8 +124,6 @@ class App extends Component {
    
     
     */
-  
-
 
   //when infowindow is closed, infowindow is hidden, marker states update
   onInfoWindowClose = (props) => {
