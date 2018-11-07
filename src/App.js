@@ -8,6 +8,7 @@ import SideNav from './components/SideNav'
 class App extends Component {
   state = {
     venues:[],
+    markers: [],
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
@@ -42,16 +43,12 @@ class App extends Component {
       .catch(error => {
           console.log(error)
       })
-  }/*
-  componentDidUpdate() {
-    this.pushMarkers()
   }
   //adding markers to state
-  pushMarkers = () => {
-    this.state.venues.map((marker,id) => {
-    return  this.state.markers.push(marker)
-    })
-  }*/
+  onMarkerCreated = (marker) => {
+    this.state.markers.push(marker)
+  }
+  
   //when marker is clicked, infowindow shows, marker states updates on click
   onMarkerClick = (props, marker, e) => {
     console.log(marker)
@@ -75,17 +72,21 @@ class App extends Component {
   }*/
   onListClick= (object) => {
     //let filterList = this.state.query ? this.state.search : this.state.venues;
-    this.setState({selectedPlace: object})
-    this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
+    this.setState({
+      selectedPlace: object,
+      menuOpen: true
+    })
+    /*this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
       {venueId:object.id},
       {venueName:object.name},
       {venueLocation:object.location},
       {open:false}
-    )})
-    /*filterList.map((myVenue)=> {
-    const marker = filterList.find(myVenue => object.id === myVenue.venue.id)
+    )})*/
+    /*let filterList = this.state.query ? this.state.search : this.state.venues;
+    filterList.map((myVenue)=> {
+    const marker = filterList.find(myVenue => this.state.selectedPlace.id === myVenue.venue.id)
     this.setState({
-      //selectedPlace: object,
+      selectedPlace: object,
       activeMarker: marker,
       showingInfoWindow: true,
       menuOpen: true 
@@ -97,7 +98,7 @@ class App extends Component {
       //this.onMarkerClick(object)
   
     });*/
-    console.log(object)
+    //console.log(marker)
   }
     /*
     let filterList = this.state.query ? this.state.search : this.state.venues;
@@ -183,7 +184,8 @@ class App extends Component {
             onMarkerClick={this.onMarkerClick}
             onClose={this.onInfoWindowClose}
             onMapClick={this.onMapClick}
-            markerAnimate={this.markerAnimate}/>
+            markerAnimate={this.markerAnimate}
+            onMarkerCreated={this.onMarkerCreated}/>
         </div>
         <div id="side-nav" aria-label="venue navigation">
           <SideNav

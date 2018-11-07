@@ -8,6 +8,12 @@ class MapContainer extends Component {
       return <div>Loading...</div>
     }
     let filterMarkers = this.props.query ? this.props.search : this.props.venues;
+    let filterMarkersNotCreated = [];
+    //Check if new array contains any element of existing array
+    if (filterMarkers.some(v=> filterMarkersNotCreated.indexOf(v) !== -1)) {
+      //if no match, add to new array filterMarkersNotCreated
+    //First time filterMarkersNotCreated will be equal to filterMarkers, but afterward it will be different
+    }
     return (
         <Map
           onClick={this.props.onMapClick} 
@@ -19,8 +25,8 @@ class MapContainer extends Component {
             lng: -122.6031
           }}>
           {/*map thru venues state to create markers, filter markers on search*/}
-          {filterMarkers.map((myVenue,id) => 
-          <Marker position={{lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng}}
+          {filterMarkersNotCreated.map((myVenue,id) => {
+          const marker = <Marker position={{lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng}}
                   title={myVenue.venue.name}
                   id={myVenue.venue.id}
                   key={id}
@@ -28,8 +34,12 @@ class MapContainer extends Component {
                   visible={this.props.markerShowing}
                   //animation={this.props.markerAnimate}
                   />
-          
-          ) }
+                  if (marker) {
+                    this.props.onMarkerCreated(marker);
+                  }
+                  return marker;
+                  
+          })  }
           
           <InfoWindow onClose={this.props.onClose}
                       marker={this.props.activeMarker}
