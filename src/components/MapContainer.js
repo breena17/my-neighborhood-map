@@ -10,10 +10,20 @@ class MapContainer extends Component {
     let filterMarkers = this.props.query ? this.props.search : this.props.venues;
     let filterMarkersNotCreated = [];
     //Check if new array contains any element of existing array
-    if (filterMarkers.some(v=> filterMarkersNotCreated.indexOf(v) !== -1)) {
-      //if no match, add to new array filterMarkersNotCreated
+    //if no match, add to new array filterMarkersNotCreated
     //First time filterMarkersNotCreated will be equal to filterMarkers, but afterward it will be different
+    
+    
+      
+    
+    /*******
+     arrayOne.forEach(function(venue) {
+      if (arrayTwo.findIndex(secondVenue => venue.id = secondVenue .id)) !== -1) {
+      // match found
     }
+    })
+    ********/
+      
     return (
         <Map
           onClick={this.props.onMapClick} 
