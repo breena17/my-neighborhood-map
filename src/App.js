@@ -20,7 +20,9 @@ class App extends Component {
   
   componentDidMount() {
     this.getVenues()
+    //this.markerCreated()
   }
+
   getVenues = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
@@ -33,9 +35,13 @@ class App extends Component {
     //fetch foursquare data with axios and set venues state
     axios.get(endpoint + new URLSearchParams(parameters))
       .then(Response => {
-        console.log(Response.data.response.groups[0].items)
+        const venues = Response.data.response.groups[0].items;
+        const markers = venues.map(venue => {
+          return venue.venue
+        });
         this.setState({
-          venues: Response.data.response.groups[0].items
+          venues: venues,
+          markers: markers
         }, () => {
           this.setState({ load: false})
         } )
@@ -45,9 +51,18 @@ class App extends Component {
       })
   }
   //adding markers to state
-  onMarkerCreated = (marker) => {
-    this.state.markers.push(marker)
-  }
+  /*markerCreated = (marker) => {
+    let filterMarkers = this.props.query ? this.props.search : this.props.venues;
+    filterMarkers.map((myVenue,id) => marker)
+       
+      if (marker) {
+      //this.props.onMarkerCreated(marker);
+      this.markers.push(marker) 
+    }
+    return marker
+    }
+    
+  }*/
   
   //when marker is clicked, infowindow shows, marker states updates on click
   onMarkerClick = (props, marker, e) => {
@@ -59,9 +74,9 @@ class App extends Component {
       menuOpen: true
     })
     //const venue =this.state.venues.find(venue =>venue.id = marker.id);
-    //this.markerAnimate(marker); 
+    this.markerAnimate(marker); 
     //marker.addListener('click', this.markerAnimate(marker));
-  }/*
+  }
   markerAnimate = (marker) => {
     //marker.setAnimation(window.google.maps.Animation.BOUNCE)
     if (marker.getAnimation() !== null) {
@@ -69,13 +84,14 @@ class App extends Component {
     } else {
       marker.setAnimation(window.google.maps.Animation.BOUNCE);
     }
-  }*/
+  }
   onListClick= (object) => {
     //let filterList = this.state.query ? this.state.search : this.state.venues;
     this.setState({
       selectedPlace: object,
       menuOpen: true
     })
+  }
     /*this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
       {venueId:object.id},
       {venueName:object.name},
@@ -99,7 +115,7 @@ class App extends Component {
   
     });*/
     //console.log(marker)
-  }
+  
     /*
     let filterList = this.state.query ? this.state.search : this.state.venues;
     filterList.map((myVenue)=> {
@@ -180,12 +196,13 @@ class App extends Component {
             {...this.state}
             google={this.state.google}
             visibility={this.state.markerShowing}
+            marker={this.state.markers}
             //onChange={(state) => this.handleMarkers(state)}
             onMarkerClick={this.onMarkerClick}
             onClose={this.onInfoWindowClose}
             onMapClick={this.onMapClick}
             markerAnimate={this.markerAnimate}
-            onMarkerCreated={this.onMarkerCreated}/>
+            />
         </div>
         <div id="side-nav" aria-label="venue navigation">
           <SideNav

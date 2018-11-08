@@ -8,13 +8,17 @@ class MapContainer extends Component {
       return <div>Loading...</div>
     }
     let filterMarkers = this.props.query ? this.props.search : this.props.venues;
-    let filterMarkersNotCreated = [];
+    //let markers =[];
+    //let filterMarkersNotCreated = [];
     //Check if new array contains any element of existing array
     //if no match, add to new array filterMarkersNotCreated
     //First time filterMarkersNotCreated will be equal to filterMarkers, but afterward it will be different
-    
-    
-      
+    /*
+    let notPresentInData = filterMarkersNotCreated.filter(val => !filterMarkers.includes(val));
+      if (notPresentInData) {
+        filterMarkers.push(filterMarkersNotCreated);
+      }
+      */
     
     /*******
      arrayOne.forEach(function(venue) {
@@ -35,7 +39,7 @@ class MapContainer extends Component {
             lng: -122.6031
           }}>
           {/*map thru venues state to create markers, filter markers on search*/}
-          {filterMarkersNotCreated.map((myVenue,id) => {
+          {filterMarkers.map((myVenue,id) => {
           const marker = <Marker position={{lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng}}
                   title={myVenue.venue.name}
                   id={myVenue.venue.id}
@@ -44,10 +48,13 @@ class MapContainer extends Component {
                   visible={this.props.markerShowing}
                   //animation={this.props.markerAnimate}
                   />
-                  if (marker) {
+                  /*if (marker) {
+                    this.markers.push(marker) 
                     this.props.onMarkerCreated(marker);
-                  }
-                  return marker;
+                  }*/
+                  return marker
+                    
+                    
                   
           })  }
           
@@ -59,6 +66,7 @@ class MapContainer extends Component {
                     <h2>{this.props.selectedPlace.title}</h2>
                     
                   )}
+                  <h3>{this.props.markers.name}</h3>
                 </div>
           </InfoWindow>
         </Map>  
