@@ -15,13 +15,26 @@ class App extends Component {
     menuOpen: false,
     query:'',
     search: [],
-    venuesToDisplay: []
+    venuesToDisplay: [],
+    realMarkers: []
   }
   
   componentDidMount() {
     this.getVenues()
   }
-
+  /*
+  onMarkerMounted = element => {
+    console.log(element);
+    this.setState(
+      {
+        realMarkers: [...this.state.realMarkers, element.marker]
+      },
+      () => {
+        console.log(this.state.realMarkers);
+      }
+    );
+  };
+*/
   getVenues = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
@@ -58,11 +71,11 @@ class App extends Component {
       activeMarker: marker,
       showingInfoWindow: true,
       menuOpen: true
-    })
+    });
     //const venue =this.state.venues.find(venue =>venue.id = marker.id);
     //this.markerAnimate(marker); 
     //marker.addListener('click', this.markerAnimate(marker));
-  }
+  };
   /*markerAnimate = (marker) => {
     //marker.setAnimation(window.google.maps.Animation.BOUNCE)
     
@@ -78,9 +91,10 @@ class App extends Component {
     //let filterList = this.state.query ? this.state.search : this.state.venues;
     this.setState({
       selectedPlace: object,
-      menuOpen: true
-    })
-  }
+      menuOpen: true,
+      
+    });
+  };
     /*this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
       {venueId:object.id},
       {venueName:object.name},
@@ -137,8 +151,8 @@ class App extends Component {
       activeMarker: null,
       showingInfoWindow: false,
       menuOpen: false
-    })
-  }
+    });
+  };
   
   //keeps state in sync with opening and closing of nav
   handleStateChange (state) {
@@ -151,18 +165,18 @@ class App extends Component {
       query,
       menuOpen:true,
       showingInfoWindow:false
-    })
+    });
     this.updateQuery(query);
-}
+};
   //filter venues based on search
   updateQuery = (query) => {
     if (query) {
       const search = this.state.venues.filter( myVenue => myVenue.venue.name.toLowerCase().includes(query.toLowerCase()));
-      this.setState({search})
+      this.setState({search});
     } else {
-      this.setState({ search: [] })
+      this.setState({ search: [] });
     }
-  }
+  };
   //when map is clicked, infowindow is hidden, marker states update
   onMapClick = (props) => {
     if (this.state.showingInfoWindow) {
@@ -170,7 +184,7 @@ class App extends Component {
         showingInfoWindow: false,
         activeMarker: null,
         menuOpen: false
-      })
+      });
     }
   };
   render() {
@@ -192,6 +206,8 @@ class App extends Component {
             onMapClick={this.onMapClick}
             markerAnimate={this.markerAnimate}
             animation={this.markerAnimate}
+            activeMarker={this.state.activeMarker}
+            onMarkerMounted={this.onMarkerMounted}
             />
         </div>
         <div id="side-nav" aria-label="venue navigation">

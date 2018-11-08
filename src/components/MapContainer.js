@@ -9,7 +9,6 @@ class MapContainer extends Component {
     }
     let filterMarkers = this.props.query ? this.props.search : this.props.venues;
     
-    let animate = this.props.activeMarker ? window.google.maps.Animation.BOUNCE : null;
     
     return (
         <Map
@@ -23,16 +22,23 @@ class MapContainer extends Component {
           }}>
           {/*map thru venues state to create markers, filter markers on search*/}
           {filterMarkers.map((myVenue,id) => {
-          const marker = <Marker position={{lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng}}
+          const marker = (
+            <Marker 
+                  ref={this.props.onMarkerMounted}
+                  position={{
+                    lat: myVenue.venue.location.lat, 
+                    lng: myVenue.venue.location.lng}}
                   title={myVenue.venue.name}
                   id={myVenue.venue.id}
                   key={id}
                   onClick={this.props.onMarkerClick}
                   visible={this.props.markerShowing}
-                  animation={animate}
+                  animation={this.props.activeMarker ? 
+                    myVenue.venue.name===this.props.activeMarker.title?
+                    '1' : '0': '0'}
                   />
-                  
-                  return marker
+          );
+                  return marker;
           })  }
           
           <InfoWindow onClose={this.props.onClose}
