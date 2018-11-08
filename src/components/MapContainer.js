@@ -8,7 +8,9 @@ class MapContainer extends Component {
       return <div>Loading...</div>
     }
     let filterMarkers = this.props.query ? this.props.search : this.props.venues;
-      
+    
+    let animate = this.props.activeMarker ? window.google.maps.Animation.BOUNCE : null;
+    
     return (
         <Map
           onClick={this.props.onMapClick} 
@@ -27,8 +29,9 @@ class MapContainer extends Component {
                   key={id}
                   onClick={this.props.onMarkerClick}
                   visible={this.props.markerShowing}
-                  //animation={this.props.markerAnimate}
+                  animation={animate}
                   />
+                  
                   return marker
           })  }
           

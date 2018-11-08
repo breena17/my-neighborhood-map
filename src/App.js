@@ -10,7 +10,7 @@ class App extends Component {
     venues:[],
     markers: [],
     showingInfoWindow: false,
-    activeMarker: {},
+    activeMarker: null,
     selectedPlace: {},
     menuOpen: false,
     query:'',
@@ -63,14 +63,17 @@ class App extends Component {
     //this.markerAnimate(marker); 
     //marker.addListener('click', this.markerAnimate(marker));
   }
-  /*markerAnimate = (markers) => {
+  /*markerAnimate = (marker) => {
     //marker.setAnimation(window.google.maps.Animation.BOUNCE)
-    if (this.state.selectedPlace.getAnimation() !== null) {
+    
+      marker.setAnimation(window.google.maps.Animation.BOUNCE);
+    
+    /*if (this.state.selectedPlace.getAnimation() !== null) {
       markers.setAnimation(null);
     } else {
       markers.setAnimation(window.google.maps.Animation.BOUNCE);
-    }
-  }*/
+    }*/
+  
   onListClick= (object) => {
     //let filterList = this.state.query ? this.state.search : this.state.venues;
     this.setState({
@@ -188,6 +191,7 @@ class App extends Component {
             onClose={this.onInfoWindowClose}
             onMapClick={this.onMapClick}
             markerAnimate={this.markerAnimate}
+            animation={this.markerAnimate}
             />
         </div>
         <div id="side-nav" aria-label="venue navigation">
