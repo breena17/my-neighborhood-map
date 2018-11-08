@@ -20,7 +20,6 @@ class App extends Component {
   
   componentDidMount() {
     this.getVenues()
-    //this.markerCreated()
   }
 
   getVenues = () => {
@@ -50,19 +49,6 @@ class App extends Component {
           console.log(error)
       })
   }
-  //adding markers to state
-  /*markerCreated = (marker) => {
-    let filterMarkers = this.props.query ? this.props.search : this.props.venues;
-    filterMarkers.map((myVenue,id) => marker)
-       
-      if (marker) {
-      //this.props.onMarkerCreated(marker);
-      this.markers.push(marker) 
-    }
-    return marker
-    }
-    
-  }*/
   
   //when marker is clicked, infowindow shows, marker states updates on click
   onMarkerClick = (props, marker, e) => {
@@ -74,17 +60,17 @@ class App extends Component {
       menuOpen: true
     })
     //const venue =this.state.venues.find(venue =>venue.id = marker.id);
-    this.markerAnimate(marker); 
+    //this.markerAnimate(marker); 
     //marker.addListener('click', this.markerAnimate(marker));
   }
-  markerAnimate = (marker) => {
+  /*markerAnimate = (markers) => {
     //marker.setAnimation(window.google.maps.Animation.BOUNCE)
-    if (marker.getAnimation() !== null) {
-      marker.setAnimation(null);
+    if (this.state.selectedPlace.getAnimation() !== null) {
+      markers.setAnimation(null);
     } else {
-      marker.setAnimation(window.google.maps.Animation.BOUNCE);
+      markers.setAnimation(window.google.maps.Animation.BOUNCE);
     }
-  }
+  }*/
   onListClick= (object) => {
     //let filterList = this.state.query ? this.state.search : this.state.venues;
     this.setState({

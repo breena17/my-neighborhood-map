@@ -8,25 +8,6 @@ class MapContainer extends Component {
       return <div>Loading...</div>
     }
     let filterMarkers = this.props.query ? this.props.search : this.props.venues;
-    //let markers =[];
-    //let filterMarkersNotCreated = [];
-    //Check if new array contains any element of existing array
-    //if no match, add to new array filterMarkersNotCreated
-    //First time filterMarkersNotCreated will be equal to filterMarkers, but afterward it will be different
-    /*
-    let notPresentInData = filterMarkersNotCreated.filter(val => !filterMarkers.includes(val));
-      if (notPresentInData) {
-        filterMarkers.push(filterMarkersNotCreated);
-      }
-      */
-    
-    /*******
-     arrayOne.forEach(function(venue) {
-      if (arrayTwo.findIndex(secondVenue => venue.id = secondVenue .id)) !== -1) {
-      // match found
-    }
-    })
-    ********/
       
     return (
         <Map
@@ -48,14 +29,7 @@ class MapContainer extends Component {
                   visible={this.props.markerShowing}
                   //animation={this.props.markerAnimate}
                   />
-                  /*if (marker) {
-                    this.markers.push(marker) 
-                    this.props.onMarkerCreated(marker);
-                  }*/
                   return marker
-                    
-                    
-                  
           })  }
           
           <InfoWindow onClose={this.props.onClose}
@@ -64,9 +38,8 @@ class MapContainer extends Component {
                 <div>
                   {this.props.selectedPlace && (
                     <h2>{this.props.selectedPlace.title}</h2>
-                    
                   )}
-                  <h3>{this.props.markers.name}</h3>
+                  <h3>{this.props.selectedPlace.id}</h3>
                 </div>
           </InfoWindow>
         </Map>  
