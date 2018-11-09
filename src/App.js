@@ -22,7 +22,7 @@ class App extends Component {
   componentDidMount() {
     this.getVenues()
   }
-  /*
+  
   onMarkerMounted = element => {
     console.log(element);
     this.setState(
@@ -34,7 +34,7 @@ class App extends Component {
       }
     );
   };
-*/
+
   getVenues = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
@@ -72,20 +72,7 @@ class App extends Component {
       showingInfoWindow: true,
       menuOpen: true
     });
-    //const venue =this.state.venues.find(venue =>venue.id = marker.id);
-    //this.markerAnimate(marker); 
-    //marker.addListener('click', this.markerAnimate(marker));
   };
-  /*markerAnimate = (marker) => {
-    //marker.setAnimation(window.google.maps.Animation.BOUNCE)
-    
-      marker.setAnimation(window.google.maps.Animation.BOUNCE);
-    
-    /*if (this.state.selectedPlace.getAnimation() !== null) {
-      markers.setAnimation(null);
-    } else {
-      markers.setAnimation(window.google.maps.Animation.BOUNCE);
-    }*/
   
   onListClick= (object) => {
     //let filterList = this.state.query ? this.state.search : this.state.venues;
@@ -94,13 +81,19 @@ class App extends Component {
       menuOpen: true,
       
     });
-  };
-    /*this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
+    this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
       {venueId:object.id},
       {venueName:object.name},
       {venueLocation:object.location},
       {open:false}
-    )})*/
+    )})
+    if (this.state.venuesToDisplay.venueName === this.state.markers.title) {
+      this.setState({
+        showingInfoWindow: true
+      })
+    }
+  };
+    /**/
     /*let filterList = this.state.query ? this.state.search : this.state.venues;
     filterList.map((myVenue)=> {
     const marker = filterList.find(myVenue => this.state.selectedPlace.id === myVenue.venue.id)
