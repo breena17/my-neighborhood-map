@@ -7,7 +7,7 @@ class MapContainer extends Component {
   addRealMarker = marker => {
     console.log('mark',marker)
     this.realMarkers.push(marker.marker);
-
+    this.props.liftState({realMarkers: this.realMarkers})
     console.log("the real markers: ", this.realMarkers);
   }
   
@@ -17,7 +17,7 @@ class MapContainer extends Component {
     }
     let filterMarkers = this.props.query ? this.props.search : this.props.venues;
     
-    this.realMarkers = [];
+    //this.realMarkers = [];
 
     let markers = filterMarkers.map((myVenue,id) => {
       const marker = (

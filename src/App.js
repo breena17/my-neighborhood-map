@@ -51,6 +51,11 @@ class App extends Component {
     )
   }
 */
+
+liftState = (object) => {
+  this.setState(object)
+}
+
   getVenues = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
@@ -212,6 +217,7 @@ class App extends Component {
             markerAnimate={this.markerAnimate}
             animation={this.markerAnimate}
             activeMarker={this.state.activeMarker}
+            liftState={this.liftState}
             //onMarkerMounted={this.onMarkerMounted}
             //addRealMarkers={this.addRealMarkers}
             />
