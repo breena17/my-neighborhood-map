@@ -6,7 +6,7 @@ class MapContainer extends Component {
 
   addRealMarker = marker => {
     console.log('mark',marker)
-    this.realMarkers.push(marker.marker);
+    this.realMarkers.push(marker);
     this.props.liftState({realMarkers: this.realMarkers})
     console.log("the real markers: ", this.realMarkers);
   }
