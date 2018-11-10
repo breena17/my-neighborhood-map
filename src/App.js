@@ -22,7 +22,7 @@ class App extends Component {
   componentDidMount() {
     this.getVenues()
   }
-  
+  /*
   onMarkerMounted = element => {
     console.log(element);
     this.setState(
@@ -34,7 +34,23 @@ class App extends Component {
       }
     );
   };
+*/
 
+
+/*
+  addRealMarkers = object => {
+    console.log('mark',object.marker)
+    
+    this.setState(
+      {
+        realMarkers: [object.marker]
+      },
+      () => {
+        console.log("the real markers: ", this.state.realMarkers);
+      }
+    )
+  }
+*/
   getVenues = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
@@ -75,22 +91,20 @@ class App extends Component {
   };
   
   onListClick= (object) => {
-    //let filterList = this.state.query ? this.state.search : this.state.venues;
     this.setState({
       selectedPlace: object,
       menuOpen: true,
       
     });
-    this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
+    /*this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
       {venueId:object.id},
       {venueName:object.name},
       {venueLocation:object.location},
       {open:false}
-    )})
-    if (this.state.venuesToDisplay.venueName === this.state.markers.title) {
-      this.setState({
-        showingInfoWindow: true
-      })
+    )})*/
+    
+    if (this.state.selectedPlace.name === this.state.markers.name) {
+      window.google.maps.event.trigger(this.state.selectedPlace[0], 'click');
     }
   };
     /**/
@@ -172,13 +186,11 @@ class App extends Component {
   };
   //when map is clicked, infowindow is hidden, marker states update
   onMapClick = (props) => {
-    if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
         activeMarker: null,
         menuOpen: false
       });
-    }
   };
   render() {
     
@@ -200,7 +212,8 @@ class App extends Component {
             markerAnimate={this.markerAnimate}
             animation={this.markerAnimate}
             activeMarker={this.state.activeMarker}
-            onMarkerMounted={this.onMarkerMounted}
+            //onMarkerMounted={this.onMarkerMounted}
+            //addRealMarkers={this.addRealMarkers}
             />
         </div>
         <div id="side-nav" aria-label="venue navigation">

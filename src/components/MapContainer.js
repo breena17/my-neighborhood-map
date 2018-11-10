@@ -2,14 +2,43 @@ import React, { Component } from 'react';
 import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
 
 class MapContainer extends Component {
+  realMarkers = [];
 
+  addRealMarker = marker => {
+    console.log('mark',marker)
+    this.realMarkers.push(marker.marker);
+
+    console.log("the real markers: ", this.realMarkers);
+  }
+  
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>
     }
     let filterMarkers = this.props.query ? this.props.search : this.props.venues;
     
-    
+    this.realMarkers = [];
+
+    let markers = filterMarkers.map((myVenue,id) => {
+      const marker = (
+        <Marker 
+              ref={this.addRealMarker}
+              position={{
+                lat: myVenue.venue.location.lat, 
+                lng: myVenue.venue.location.lng}}
+              title={myVenue.venue.name}
+              id={myVenue.venue.id}
+              key={id}
+              onClick={this.props.onMarkerClick}
+              visible={this.props.markerShowing}
+              animation={this.props.activeMarker ? 
+                myVenue.venue.name===this.props.activeMarker.title?
+                '1' : '0': '0'}
+              />
+      );
+              return marker;
+      })  
+
     return (
         <Map
           onClick={this.props.onMapClick} 
@@ -21,25 +50,7 @@ class MapContainer extends Component {
             lng: -122.6031
           }}>
           {/*map thru venues state to create markers, filter markers on search*/}
-          {filterMarkers.map((myVenue,id) => {
-          const marker = (
-            <Marker 
-                  ref={this.props.onMarkerMounted}
-                  position={{
-                    lat: myVenue.venue.location.lat, 
-                    lng: myVenue.venue.location.lng}}
-                  title={myVenue.venue.name}
-                  id={myVenue.venue.id}
-                  key={id}
-                  onClick={this.props.onMarkerClick}
-                  visible={this.props.markerShowing}
-                  animation={this.props.activeMarker ? 
-                    myVenue.venue.name===this.props.activeMarker.title?
-                    '1' : '0': '0'}
-                  />
-          );
-                  return marker;
-          })  }
+          {markers}
           
           <InfoWindow onClose={this.props.onClose}
                       marker={this.props.activeMarker}
