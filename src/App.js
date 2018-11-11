@@ -110,7 +110,8 @@ liftState = (object) => {
     this.setState({
       selectedPlace: object,
       menuOpen: false,
-      activeMarker: marker
+      activeMarker: marker,
+      showingInfoWindow: true
     });
     //window.google.maps.event.trigger(this.onMarkerClick[index],'click')
   };  
