@@ -24,8 +24,8 @@ class App extends Component {
     this.getVenues()
   }
 
-  componentWillReceiveProps(props) {
-    this.onMarkerClick(this.state.realMarkers[props.selectedIndex])
+  componentWillReceiveProps= (props) => {
+    this.onMarkerClick(this.state.selectedPlace)
   }
   /*
   onMarkerMounted = element => {
@@ -95,19 +95,28 @@ liftState = (object) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true,
-      menuOpen: true
+      showingInfoWindow: true
     });
   };
-  
-  onListClick= (index) => {
+  /*
+  handleListClick = (id) => {
+    let matchingMarker = this.state.markers.find(marker => marker.id === id);
+
+    window.google.maps.event.trigger(matchingMarker, 'click');
+  }
+*/
+  onListClick= (object,marker) => {
+    
     this.setState({
-      selectedIndex: index,
+      selectedPlace: object,
       menuOpen: false,
-      
+      activeMarker: marker
     });
+    //window.google.maps.event.trigger(this.onMarkerClick[index],'click')
   };  
-    /*this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
+    
+  
+  /*this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
       {venueId:object.id},
       {venueName:object.name},
       {venueLocation:object.location},
@@ -162,6 +171,7 @@ liftState = (object) => {
    
     
     */
+  
 
   //when infowindow is closed, infowindow is hidden, marker states update
   onInfoWindowClose = (props) => {
@@ -185,6 +195,7 @@ liftState = (object) => {
       showingInfoWindow:false,
       selectedIndex: null
     });
+
     this.updateQuery(query);
 };
   //filter venues based on search
@@ -201,7 +212,8 @@ liftState = (object) => {
       this.setState({
         showingInfoWindow: false,
         activeMarker: null,
-        menuOpen: false
+        menuOpen: false,
+        selectedPlace: null
       });
   };
   render() {
@@ -227,6 +239,8 @@ liftState = (object) => {
             liftState={this.liftState}
             search={this.state.search}
             onListClick={this.onListClick}
+            realMarkers={this.state.realMarkers}
+            selectedPlace={this.state.selectedPlace}
             //onMarkerMounted={this.onMarkerMounted}
             //addRealMarkers={this.addRealMarkers}
             />
@@ -245,6 +259,7 @@ liftState = (object) => {
             searchVenues={this.searchVenues}
             activeMarker={this.state.activeMarker}
             onStateChange={(state) => this.handleStateChange(state)}
+            realMarkers={this.realMarkers}
             
           />
         </div>

@@ -11,6 +11,7 @@ class MapContainer extends Component {
     console.log("the real markers: ", this.realMarkers);
   }
   
+
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>
@@ -31,8 +32,9 @@ class MapContainer extends Component {
               key={index}
               onClick={this.props.onMarkerClick}
               visible={this.props.markerShowing}
-              animation={this.props.activeMarker ? 
-                myVenue.venue.name===this.props.activeMarker.title?
+              animation={this.props.selectedPlace ? 
+                myVenue.venue.name===this.props.selectedPlace.title ||
+                myVenue.venue.name===this.props.selectedPlace.name ?
                 '1' : '0': '0'}
               />
       );
@@ -41,6 +43,7 @@ class MapContainer extends Component {
 
     return (
         <Map
+          selectedPlace={this.props.selectedPlace}
           onClick={this.props.onMapClick} 
           google={this.props.google} 
           zoom={10}
@@ -59,7 +62,10 @@ class MapContainer extends Component {
                   {this.props.selectedPlace && (
                     <h2>{this.props.selectedPlace.title}</h2>
                   )}
-                  <h3>{this.props.selectedPlace.id}</h3>
+                  {this.props.selectedPlace && (
+                    <h3>{this.props.selectedPlace.id}</h3>
+                  )}
+                  
                 </div>
           </InfoWindow>
         </Map>  
