@@ -12,6 +12,7 @@ class App extends Component {
     showingInfoWindow: false,
     activeMarker: null,
     selectedPlace: {},
+    selectedIndex: null,
     menuOpen: false,
     query:'',
     search: [],
@@ -23,8 +24,8 @@ class App extends Component {
     this.getVenues()
   }
 
-  componentWillReceiveProps() {
-    //this.onMarkerClick(this.state.realMarkers[selectedIndex])
+  componentWillReceiveProps(props) {
+    this.onMarkerClick(this.state.realMarkers[props.selectedIndex])
   }
   /*
   onMarkerMounted = element => {
