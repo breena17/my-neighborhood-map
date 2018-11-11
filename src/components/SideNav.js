@@ -29,14 +29,14 @@ class SideNav extends Component {
                     
                     <ul className="list">
                         {/*filter list based on search*/}
-                        {filterList.map(myVenue => (
+                        {filterList.map((myVenue,index) => (
                             <li className="nav-item"
                                 id={myVenue.venue.id}
-                                key={myVenue.venue.id}
+                                key={index}
                                 tabIndex="0"
                                 aria-label={myVenue.venue.name}
                                 role="menuItem"
-                                onClick={() => {this.props.onListClick(myVenue.venue)}}>
+                                onClick={() => {this.props.onListClick(index)}}>
                                 
                                 <h2>{myVenue.venue.name}</h2>
                                 <p>{myVenue.venue.location.address}</p>

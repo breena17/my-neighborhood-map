@@ -22,6 +22,10 @@ class App extends Component {
   componentDidMount() {
     this.getVenues()
   }
+
+  componentWillReceiveProps() {
+    //this.onMarkerClick(this.state.realMarkers[selectedIndex])
+  }
   /*
   onMarkerMounted = element => {
     console.log(element);
@@ -95,12 +99,13 @@ liftState = (object) => {
     });
   };
   
-  onListClick= (object) => {
+  onListClick= (index) => {
     this.setState({
-      selectedPlace: object,
-      menuOpen: true,
+      selectedIndex: index,
+      menuOpen: false,
       
     });
+  };  
     /*this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
       {venueId:object.id},
       {venueName:object.name},
@@ -108,10 +113,10 @@ liftState = (object) => {
       {open:false}
     )})*/
     
-    if (this.state.selectedPlace.name === this.state.markers.name) {
-      window.google.maps.event.trigger(this.state.selectedPlace[0], 'click');
-    }
-  };
+    //if (this.state.selectedPlace.name === this.state.markers.name) {
+    //  window.google.maps.event.trigger(this.state.selectedPlace[0], 'click');
+    //}
+  
     /**/
     /*let filterList = this.state.query ? this.state.search : this.state.venues;
     filterList.map((myVenue)=> {
@@ -176,7 +181,8 @@ liftState = (object) => {
     this.setState({
       query,
       menuOpen:true,
-      showingInfoWindow:false
+      showingInfoWindow:false,
+      selectedIndex: null
     });
     this.updateQuery(query);
 };
@@ -218,6 +224,8 @@ liftState = (object) => {
             animation={this.markerAnimate}
             activeMarker={this.state.activeMarker}
             liftState={this.liftState}
+            search={this.state.search}
+            onListClick={this.onListClick}
             //onMarkerMounted={this.onMarkerMounted}
             //addRealMarkers={this.addRealMarkers}
             />

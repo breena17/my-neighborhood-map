@@ -19,7 +19,7 @@ class MapContainer extends Component {
     
     //this.realMarkers = [];
 
-    let markers = filterMarkers.map((myVenue,id) => {
+    let markers = filterMarkers.map((myVenue,index) => {
       const marker = (
         <Marker 
               ref={this.addRealMarker}
@@ -28,7 +28,7 @@ class MapContainer extends Component {
                 lng: myVenue.venue.location.lng}}
               title={myVenue.venue.name}
               id={myVenue.venue.id}
-              key={id}
+              key={index}
               onClick={this.props.onMarkerClick}
               visible={this.props.markerShowing}
               animation={this.props.activeMarker ? 
