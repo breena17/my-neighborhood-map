@@ -7,230 +7,141 @@ import SideNav from './components/SideNav'
 
 class App extends Component {
   state = {
-    venues:[],
+    venues: [],
     markers: [],
     showingInfoWindow: false,
     activeMarker: null,
     selectedPlace: {},
     selectedIndex: null,
     menuOpen: false,
-    query:'',
+    query: "",
     search: [],
     venuesToDisplay: [],
-    realMarkers: []
-  }
-  
-  componentDidMount() {
-    this.getVenues()
-  }
-
-  componentWillReceiveProps= (props) => {
-    this.onMarkerClick(this.state.selectedPlace)
-  }
-  /*
-  onMarkerMounted = element => {
-    console.log(element);
-    this.setState(
-      {
-        realMarkers: [...this.state.realMarkers, element.marker]
-      },
-      () => {
-        console.log(this.state.realMarkers);
-      }
-    );
+    realMarkers: [],
+    generatedMarkers: null
   };
-*/
 
-
-/*
-  addRealMarkers = object => {
-    console.log('mark',object.marker)
-    
-    this.setState(
-      {
-        realMarkers: [object.marker]
-      },
-      () => {
-        console.log("the real markers: ", this.state.realMarkers);
-      }
-    )
+  componentDidMount() {
+    this.getVenues();
   }
-*/
 
-liftState = (object) => {
-  this.setState(object)
-}
+  liftState = markers => {
+    this.setState({ generatedMarkers: markers }, () => console.log(this.state));
+  };
 
   getVenues = () => {
-    const endpoint = "https://api.foursquare.com/v2/venues/explore?"
+    const endpoint = "https://api.foursquare.com/v2/venues/explore?";
     const parameters = {
-      client_id:"L105UNFOLBWBYAH2I4KRUPGRZZVZXIY3NFZAFZ0V4OSRWXHN",
-      client_secret:"531CGS50AMTVAHMAJXV1BGE35KC4445ZCG30O4QWBB5BR3LR",
-      query:"beach",
-      near:"Seattle, WA",
-      v:"20181010"
-    }
+      client_id: "L105UNFOLBWBYAH2I4KRUPGRZZVZXIY3NFZAFZ0V4OSRWXHN",
+      client_secret: "531CGS50AMTVAHMAJXV1BGE35KC4445ZCG30O4QWBB5BR3LR",
+      query: "beach",
+      near: "Seattle, WA",
+      v: "20181010"
+    };
     //fetch foursquare data with axios and set venues state
-    axios.get(endpoint + new URLSearchParams(parameters))
+    axios
+      .get(endpoint + new URLSearchParams(parameters))
       .then(Response => {
         const venues = Response.data.response.groups[0].items;
         const markers = venues.map(venue => {
-          return venue.venue
+          return venue.venue;
         });
-        this.setState({
-          venues: venues,
-          markers: markers
-        }, () => {
-          this.setState({ load: false})
-        } )
+        this.setState(
+          {
+            venues: venues,
+            markers: markers
+          },
+          () => {
+            this.setState({ load: false });
+          }
+        );
       })
       .catch(error => {
-          console.log(error)
-      })
-  }
-  
+        console.log(error);
+      });
+  };
+
   //when marker is clicked, infowindow shows, marker states updates on click
   onMarkerClick = (props, marker, e) => {
-    console.log(marker)
+    console.log(props, marker);
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
   };
-  /*
-  handleListClick = (id) => {
-    let matchingMarker = this.state.markers.find(marker => marker.id === id);
 
-    window.google.maps.event.trigger(matchingMarker, 'click');
-  }
-*/
-  onListClick= (object,marker) => {
-    
-    this.setState({
-      selectedPlace: object,
-      menuOpen: false,
-      activeMarker: marker,
-      showingInfoWindow: true
+  onListClick = venue => {
+    console.log(venue);
+    this.state.generatedMarkers.forEach(marker => {
+      console.log(marker);
+      if (venue.id === marker.props.id) {
+        this.setState({
+          selectedPlace: venue,
+          menuOpen: false,
+          activeMarker: marker.marker,
+          showingInfoWindow: true
+        });
+      }
     });
-    //window.google.maps.event.trigger(this.onMarkerClick[index],'click')
-  };  
-    
-  
-  /*this.setState({venuesToDisplay: Object.assign({}, this.state.venuesToDisplay,
-      {venueId:object.id},
-      {venueName:object.name},
-      {venueLocation:object.location},
-      {open:false}
-    )})*/
-    
-    //if (this.state.selectedPlace.name === this.state.markers.name) {
-    //  window.google.maps.event.trigger(this.state.selectedPlace[0], 'click');
-    //}
-  
-    /**/
-    /*let filterList = this.state.query ? this.state.search : this.state.venues;
-    filterList.map((myVenue)=> {
-    const marker = filterList.find(myVenue => this.state.selectedPlace.id === myVenue.venue.id)
-    this.setState({
-      selectedPlace: object,
-      activeMarker: marker,
-      showingInfoWindow: true,
-      menuOpen: true 
-    })
-    return marker;
-    
-    //if(this.state.selectedPlace.id === this.marker.id) {
-      //console.log('match')
-      //this.onMarkerClick(object)
-  
-    });*/
-    //console.log(marker)
-  
-    /*
-    let filterList = this.state.query ? this.state.search : this.state.venues;
-    filterList.map((myVenue)=> {
-      const marker = filterList.find(myVenue => selectedPlace.id === myVenue.venue.id);
-      this.setState ({
-      activeMarker: marker,
-      showingInfoWindow: true,
-      menuOpen: true
-    })
-    return marker;
-    })
-*//*let filterList = this.state.query ? this.state.search : this.state.venues;
-    filterList.map((myVenue)=> {
-    if(this.state.selectedPlace.id === this.state.myVenue.venue.id) {
-      this.setState({
-        activeMarker: !null,
-        showingInforWindow: true,
-        menuOpen: true
-      })
-    }
-    this.onMarkerClick(o)
-  })
-   
-    
-    */
-  
+  };
 
-  //when infowindow is closed, infowindow is hidden, marker states update
-  onInfoWindowClose = (props) => {
+  onInfoWindowClose = props => {
     this.setState({
       activeMarker: null,
       showingInfoWindow: false,
       menuOpen: false
     });
   };
-  
+
   //keeps state in sync with opening and closing of nav
-  handleStateChange (state) {
-    this.setState({menuOpen: state.isOpen})
+  handleStateChange(state) {
+    this.setState({ menuOpen: state.isOpen });
   }
-  
+
   //filter venue markers based on search
-  searchVenues = (query) => {
+  searchVenues = query => {
     this.setState({
       query,
-      menuOpen:true,
-      showingInfoWindow:false,
+      menuOpen: true,
+      showingInfoWindow: false,
       selectedIndex: null
     });
 
     this.updateQuery(query);
-};
+  };
   //filter venues based on search
-  updateQuery = (query) => {
+  updateQuery = query => {
     if (query) {
-      const search = this.state.venues.filter( myVenue => myVenue.venue.name.toLowerCase().includes(query.toLowerCase()));
-      this.setState({search});
+      const search = this.state.venues.filter(myVenue =>
+        myVenue.venue.name.toLowerCase().includes(query.toLowerCase())
+      );
+      this.setState({ search });
     } else {
       this.setState({ search: [] });
     }
   };
   //when map is clicked, infowindow is hidden, marker states update
-  onMapClick = (props) => {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null,
-        menuOpen: false,
-        selectedPlace: null
-      });
+  onMapClick = props => {
+    this.setState({
+      showingInfoWindow: false,
+      activeMarker: null,
+      menuOpen: false,
+      selectedPlace: null
+    });
   };
   render() {
-    
     return (
       <div id="app">
         <nav id="top-nav" aria-label="header">
           <h1>BeachFinder</h1>
         </nav>
         <div id="map" aria-label="map" role="application">
-          <MapContainer 
+          <MapContainer
             {...this.state}
             google={this.state.google}
             visibility={this.state.markerShowing}
             marker={this.state.markers}
-            //onChange={(state) => this.handleMarkers(state)}
             onMarkerClick={this.onMarkerClick}
             onClose={this.onInfoWindowClose}
             onMapClick={this.onMapClick}
@@ -242,13 +153,11 @@ liftState = (object) => {
             onListClick={this.onListClick}
             realMarkers={this.state.realMarkers}
             selectedPlace={this.state.selectedPlace}
-            //onMarkerMounted={this.onMarkerMounted}
-            //addRealMarkers={this.addRealMarkers}
-            />
+          />
         </div>
         <div id="side-nav" aria-label="venue navigation">
           <SideNav
-            {...this.state} 
+            {...this.state}
             pageWrapId={"nav-list"}
             outerContainerId={"app"}
             venues={this.state.venues}
@@ -259,12 +168,11 @@ liftState = (object) => {
             updateQuery={this.updateQuery}
             searchVenues={this.searchVenues}
             activeMarker={this.state.activeMarker}
-            onStateChange={(state) => this.handleStateChange(state)}
+            onStateChange={state => this.handleStateChange(state)}
             realMarkers={this.realMarkers}
-            
           />
         </div>
-      </div>  
+      </div>
     );
   }
 }
