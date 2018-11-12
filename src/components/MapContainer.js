@@ -6,24 +6,30 @@ class MapContainer extends Component {
   realMarkers = [];
   //as markers are being created put them into real markers array, lift state to App
   addRealMarker = marker => {
-    console.log("mark", marker);
-    this.realMarkers.push(marker);
+    //console.log("mark", marker);
+    if(this.realMarkers.length<30) {
+      this.realMarkers.push(marker);
     this.props.liftState(this.realMarkers);
+    }
   };
+  
 
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>;
     }
+    //infowindow address
+    let contentString = this.props.markers.map(marker => {
+     if(this.props.selectedPlace.title === marker.name ||
+        this.props.selectedPlace.name === marker.name)
+      return marker.location.address;
+    }
+  );
+  
+    
     let filterMarkers = this.props.query
       ? this.props.search
       : this.props.venues;
-    
-    /*let filterMarkersNotCreated = [];
-    let notPresentInData = filterMarkersNotCreated.filter(val => !filterMarkers.includes(val));
-    if (notPresentInData) {
-      filterMarkers.push(filterMarkersNotCreated);
-    }*/
 
     let markers = filterMarkers.map((myVenue, index) => {
       const marker = (
@@ -56,16 +62,17 @@ class MapContainer extends Component {
         selectedPlace={this.props.selectedPlace}
         onClick={this.props.onMapClick}
         google={this.props.google}
-        zoom={10}
+        zoom={11}
         style={{ height: "calc(100% - 101px)" }}
         initialCenter={{
-          lat: 47.6194,
-          lng: -122.6031
+          lat: 47.6262,
+          lng: -122.3500
         }}>
         {/*map thru venues state to create markers, filter markers on search*/}
         {markers}
-
+        
         <InfoWindow
+          ref={this.addContent}
           onClose={this.props.onClose}
           marker={this.props.activeMarker}
           visible={this.props.showingInfoWindow}>
@@ -76,7 +83,8 @@ class MapContainer extends Component {
                   this.props.selectedPlace.name}
               </h2>
             )}
-            {this.props.selectedPlace && <h3>{this.props.selectedPlace.id}</h3>}
+            <h3>{contentString}</h3>
+            
           </div>
         </InfoWindow>
       </Map>

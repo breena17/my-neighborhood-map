@@ -23,11 +23,10 @@ class App extends Component {
 
   componentDidMount() {
     this.getVenues();
-    this.liftState();
   }
   //lift markers in MapContainer to App
   liftState = (markers) => {
-    this.setState({ generatedMarkers: markers }, () => console.log(this.state));
+    this.setState({ generatedMarkers: markers });
   };
 
   /*prevent generatedMarkers from expanding
@@ -100,7 +99,7 @@ class App extends Component {
       activeMarker: null,
       showingInfoWindow: false,
       menuOpen: false,
-      selectedPlace: null
+      selectedPlace: []
     });
   };
 
@@ -116,7 +115,7 @@ class App extends Component {
       menuOpen: true,
       showingInfoWindow: false,
       selectedIndex: null,
-      selectedPlace:null
+      selectedPlace:[]
     });
 
     this.updateQuery(query);
@@ -138,7 +137,7 @@ class App extends Component {
       showingInfoWindow: false,
       activeMarker: null,
       menuOpen: false,
-      selectedPlace: null
+      selectedPlace: []
     });
   };
   render() {
