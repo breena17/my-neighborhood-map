@@ -72,7 +72,6 @@ class MapContainer extends Component {
         {markers}
         
         <InfoWindow
-          ref={this.addContent}
           onClose={this.props.onClose}
           marker={this.props.activeMarker}
           visible={this.props.showingInfoWindow}>

@@ -7,9 +7,7 @@ class SideNav extends Component {
       event.preventDefault();
     }
     render() {
-        
       let filterList = this.props.query ? this.props.search : this.props.venues;
-
       
       return (
         <Menu width={"40%"} isOpen={this.props.menuOpen}>

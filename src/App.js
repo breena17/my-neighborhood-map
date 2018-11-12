@@ -12,11 +12,9 @@ class App extends Component {
     showingInfoWindow: false,
     activeMarker: null,
     selectedPlace: {},
-    selectedIndex: null,
     menuOpen: false,
     query: "",
     search: [],
-    venuesToDisplay: [],
     realMarkers: [],
     generatedMarkers: null,
   };
@@ -29,13 +27,6 @@ class App extends Component {
     this.setState({ generatedMarkers: markers });
   };
 
-  /*prevent generatedMarkers from expanding
-  avoidExpand = () => {
-    newGeneratedMarkers =[];
-    const newMarkers = this.state.generatedMarkers.slice(0);
-    this.newGeneratedMarkers.push(newMarkers);
-    console.log(newGeneratedMarkers);
-  }*/
 
   getVenues = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/explore?";
@@ -114,7 +105,6 @@ class App extends Component {
       query,
       menuOpen: true,
       showingInfoWindow: false,
-      selectedIndex: null,
       selectedPlace:[]
     });
 
@@ -155,8 +145,6 @@ class App extends Component {
             onMarkerClick={this.onMarkerClick}
             onClose={this.onInfoWindowClose}
             onMapClick={this.onMapClick}
-            markerAnimate={this.markerAnimate}
-            animation={this.markerAnimate}
             activeMarker={this.state.activeMarker}
             liftState={this.liftState}
             search={this.state.search}
@@ -168,8 +156,6 @@ class App extends Component {
         <div id="side-nav" aria-label="venue navigation">
           <SideNav
             {...this.state}
-            pageWrapId={"nav-list"}
-            outerContainerId={"app"}
             venues={this.state.venues}
             isOpen={this.state.menuOpen}
             onListClick={this.onListClick}
