@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
 
 class MapContainer extends Component {
+  
   realMarkers = [];
-
+  //as markers are being created put them into real markers array, lift state to App
   addRealMarker = marker => {
     console.log("mark", marker);
     this.realMarkers.push(marker);
@@ -17,6 +18,12 @@ class MapContainer extends Component {
     let filterMarkers = this.props.query
       ? this.props.search
       : this.props.venues;
+    
+    /*let filterMarkersNotCreated = [];
+    let notPresentInData = filterMarkersNotCreated.filter(val => !filterMarkers.includes(val));
+    if (notPresentInData) {
+      filterMarkers.push(filterMarkersNotCreated);
+    }*/
 
     let markers = filterMarkers.map((myVenue, index) => {
       const marker = (

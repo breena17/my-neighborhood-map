@@ -18,16 +18,25 @@ class App extends Component {
     search: [],
     venuesToDisplay: [],
     realMarkers: [],
-    generatedMarkers: null
+    generatedMarkers: null,
   };
 
   componentDidMount() {
     this.getVenues();
+    this.liftState();
   }
-
-  liftState = markers => {
+  //lift markers in MapContainer to App
+  liftState = (markers) => {
     this.setState({ generatedMarkers: markers }, () => console.log(this.state));
   };
+
+  /*prevent generatedMarkers from expanding
+  avoidExpand = () => {
+    newGeneratedMarkers =[];
+    const newMarkers = this.state.generatedMarkers.slice(0);
+    this.newGeneratedMarkers.push(newMarkers);
+    console.log(newGeneratedMarkers);
+  }*/
 
   getVenues = () => {
     const endpoint = "https://api.foursquare.com/v2/venues/explore?";
@@ -70,11 +79,11 @@ class App extends Component {
       showingInfoWindow: true
     });
   };
-
+  //when list item is clicked match venued id with marker id, set active marker
   onListClick = venue => {
     console.log(venue);
     this.state.generatedMarkers.forEach(marker => {
-      console.log(marker);
+      console.log('list marker',marker);
       if (venue.id === marker.props.id) {
         this.setState({
           selectedPlace: venue,
@@ -85,12 +94,13 @@ class App extends Component {
       }
     });
   };
-
+  //run on infowindow close
   onInfoWindowClose = props => {
     this.setState({
       activeMarker: null,
       showingInfoWindow: false,
-      menuOpen: false
+      menuOpen: false,
+      selectedPlace: null
     });
   };
 
@@ -105,7 +115,8 @@ class App extends Component {
       query,
       menuOpen: true,
       showingInfoWindow: false,
-      selectedIndex: null
+      selectedIndex: null,
+      selectedPlace:null
     });
 
     this.updateQuery(query);
@@ -167,9 +178,7 @@ class App extends Component {
             search={this.state.search}
             updateQuery={this.updateQuery}
             searchVenues={this.searchVenues}
-            activeMarker={this.state.activeMarker}
             onStateChange={state => this.handleStateChange(state)}
-            realMarkers={this.realMarkers}
           />
         </div>
       </div>
