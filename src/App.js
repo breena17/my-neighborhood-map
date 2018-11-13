@@ -56,6 +56,7 @@ class App extends Component {
         );
       })
       .catch(error => {
+        alert("Authentication Failed :( please double check your credentials.")
         console.log(error);
       });
   };
